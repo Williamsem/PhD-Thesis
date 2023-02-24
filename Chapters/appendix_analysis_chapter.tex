@@ -1,0 +1,544 @@
+\documentclass[thesis.tex]{subfiles}
+\begin{document}
+\chapter{Experimental Analysis Further Material}\label{App:experimental}
+
+This appendix contains the material relating to Chapter \ref{chp:Experimental Analysis}. Section \ref{app:secdata} contains the data relating to hospital admissions and scan information for patients admitted between 1$^{st}$ April 2017 and 31$^{st}$ March 2020. Section \ref{app:secregression} contains the regression tree output data. 
+
+
+\section{ABUHB Admission and Scan Data - Attributes}\label{app:secdata}
+
+
+
+\begin{longtable}{p{4.8cm}p{1.9cm}p{4.2cm}p{1.2cm}p{2cm}p{1.6cm}}
+\toprule
+{ \textbf{Attribute}} & { \textbf{Data type}} & { \textbf{Distinct attribute values or bins}} & \multicolumn{3}{c}{ \textbf{Documentation}}
+\tabularnewline
+& & & { at ad\-mis\-sion }& {during admission} & {at di\-scharge}\tabularnewline
+\midrule
+\endhead
+{Age in years  at admission} & {continuous} & {43 (65 years, 66 years, ..., 106 years, 107 years)} &\checkmark & \tabularnewline\midrule
+
+{Hospital} & {Nominal} & {14 (e.g. Chepstow Community Hospital)} &\checkmark & \tabularnewline\midrule
+{Method of admission} & {Nominal} &  {17 (e.g. Elective waiting list)} &\checkmark & \tabularnewline\midrule
+{Specialty} & {Nominal} & {30 (e.g. Care of the Elderly, Neurology)}&\checkmark & \tabularnewline\midrule
+{Source of admission} & {Nominal} & {26 (e.g. Usual place of residence)}&\checkmark & \tabularnewline\midrule
+{Day of admission} & {Nominal} & {7 (e.g. Monday)}&\checkmark & \tabularnewline\midrule
+{Month of admission} & {Nominal} & {12 (e.g. January)}&\checkmark & \tabularnewline\midrule
+{Patient postcode} & {Nominal} &{13819 (e.g. )} &\checkmark & \tabularnewline\midrule
+{Registered GP} & {Nominal} & {1313 (e.g. )}&\checkmark & \tabularnewline\midrule 
+{GP practice code} & {Nominal} & {618 (e.g. )} &\checkmark & \tabularnewline\midrule 
+{Patient Borough} & {Nominal} & {174 (e.g. Newport LHB, Monmouthshire LHB)} &\checkmark & \tabularnewline\midrule 
+{Diagnosis} & {Nominal} &{2758 (e.g. Fracture of neck of femur, Congestive heart failure)} &\checkmark & \tabularnewline\midrule
+{Admission time} & {Continuous} & {1440 (\{hh:mm\})}&\checkmark & \tabularnewline\midrule
+{Scan requested date} & & {1090 (e.g. (01/04/2017)}&&\checkmark & \tabularnewline\midrule
+{Scan attendance date} & {Nominal}& {1097 (e.g. (01/04/2017)}&&\checkmark & \tabularnewline\midrule
+{Scan attendance time} &{Continuous}& {11417 (\{hh:mm:ss\})}&&\checkmark & \tabularnewline\midrule
+{Scan procedure group} &{Nominal}& {16 (e.g. R, CT, MR)} &&\checkmark & \tabularnewline\midrule
+{Scan exam code} &{Nominal}& {295 (e.g. XCHES, XABDO, CSKUH)} &&\checkmark & \tabularnewline\midrule
+{Scan exam} &{Nominal}& {293 (e.g. CT Neck and thorax)}&&\checkmark & \tabularnewline\midrule
+{Scan location} & {Nominal} & {74 (e.g. Medical Assessment, Intensive Care Unit)} &&\checkmark & \tabularnewline\midrule
+{Scan specialty Code} & {Nominal} & {37 (e.g. Gastro, Neuro)} &&\checkmark&\tabularnewline\midrule
+ {Discharge time} && &&&\checkmark  \tabularnewline\midrule
+{Discharge date} &&& &&\checkmark  \tabularnewline\midrule
+{Discharge Location} &{Nominal} &{26 (e.g. Death, Own home, Patient transfer within same health board/trust)} & &&\checkmark \tabularnewline\midrule
+\bottomrule
+\caption{List of attributes used for the CART analysis\label{app3:tab:attributes}}
+
+
+\end{longtable}
+
+\section{Regression Tree Groupings}\label{app:secregression}
+This section provides the regression groupings and the associated average LOS for each of the end nodes. Comments are shown in \textcolor{blue}{blue}, with average LOS in hours displayed in \textcolor{red}{red}. 
+%\begin{landscape}
+\scriptsize{
+\begin{alltt}
+     if admission_method_Other - transferred from another hospital <= 0.5:
+        if admission_method_Elective - waiting list <= 0.5:
+            if admission_method_Elective - booked <= 0.5:
+                if specialty_Accident & Emergency <= 0.5:
+                    if admission_method_Elective - planned <= 0.5:
+                        if hospital_Ysbyty Ystrad Fawr <= 0.5:
+                            if Age_group_65-69 <= 0.5:
+                                if Age_group_70-74 <= 0.5:
+                                    if specialty_Trauma & Orthopaedic <= 0.5:
+                                        if Age_group_75-79 <= 0.5:
+                                            if specialty_Care Of The Elderly <= 0.5:
+                                                return \textcolor{red}{[[9.81148237]]}
+                                            else:  \textcolor{blue}{# if specialty_Care Of The Elderly > 0.5}
+                                                return \textcolor{red}{[[11.39308949]]}
+                                        else:  \textcolor{blue}{# if Age_group_75-79 > 0.5}
+                                            return \textcolor{red}{[[8.83057656]]}
+                                    else:  \textcolor{blue}{# if specialty_Trauma & Orthopaedic > 0.5}
+                                        return \textcolor{red}{[[13.27625571]]}
+                                else: \textcolor{blue}{# if Age_group_70-74 > 0.5}
+                                    return \textcolor{red}{[[7.83854833]]}
+                            else:  \textcolor{blue}{# if Age_group_65-69 > 0.5}
+                                return \textcolor{red}{[[7.35347877]]}
+                        else:  \textcolor{blue}{# if hospital_Ysbyty Ystrad Fawr > 0.5}
+                            if FrailtyGroup_2 <= 0.5:
+                                if Age_group_90-94 <= 0.5:
+                                    return \textcolor{red}{[[13.43980061]]}
+                                else:  \textcolor{blue}{# if Age_group_90-94 > 0.5}
+                                    return [[19.]]
+                            else:  \textcolor{blue}{# if FrailtyGroup_2 > 0.5}
+                                return \textcolor{red}{[[20.35322777]]}
+                    else:  \textcolor{blue}{# if admission_method_Elective - planned > 0.5}
+                        return \textcolor{red}{[[0.19179104]]}
+                else:  \textcolor{blue}{# if specialty_Accident & Emergency > 0.5}
+                    return \textcolor{red}{[[2.28825294]]}
+            else:  \textcolor{blue}{# if admission_method_Elective - booked > 0.5}
+                return \textcolor{red}{[[0.24649508]]}
+        else:  \textcolor{blue}{# if admission_method_Elective - waiting list > 0.5}
+            if specialty_Trauma & Orthopaedic <= 0.5:
+                return \textcolor{red}{[[0.4027881]]}
+            else:  \textcolor{blue}{# if specialty_Trauma & Orthopaedic > 0.5}
+                if hospital_Ysbyty Ystrad Fawr <= 0.5:
+                    return \textcolor{red}{[[3.56313566]]}
+                else:  \textcolor{blue}{# if hospital_Ysbyty Ystrad Fawr > 0.5}
+                    return \textcolor{red}{[[0.16842962]]}
+    else:  \textcolor{blue}{# if admission_method_Other - transferred from another hospital > 0.5}
+        if hospital_Royal Gwent Hospital <= 0.5:
+            if hospital_St Woolos Acute Hospital <= 0.5:
+                if hospital_Nevill Hall Hospital <= 0.5:
+                    if hospital_Ysbyty Aneurin Bevan <= 0.5:
+                        if specialty_Care Of The Elderly <= 0.5:
+                            if specialty_Diabetes And Endocrinology <= 0.5:
+                                if specialty_Rehabilitation <= 0.5:
+                                    return \textcolor{red}{[[38.63267544]]}
+                                else:  \textcolor{blue}{# if specialty_Rehabilitation > 0.5}
+                                    if hospital_Chepstow Community Hospital <= 0.5:
+                                        if hospital_Ysbyty Ystrad Fawr <= 0.5:
+                                            if admission_source_Same Trust-General or
+                                            young phys.disabled <= 0.5:
+                                                return \textcolor{red}{[[33.48491155]]}
+                                            else:  \textcolor{blue}{# if admission_source_Same Trust-General}
+                                            \textcolor{blue}{or young phys.disabled > 0.5}
+                                                return \textcolor{red}{[[30.2618469]]}
+                                        else:  \textcolor{blue}{# if hospital_Ysbyty Ystrad Fawr > 0.5}
+                                            return \textcolor{red}{[[35.2183755]]}
+                                    else:  \textcolor{blue}{# if hospital_Chepstow Community Hospital > 0.5}
+                                        return \textcolor{red}{[[37.42204301]]}
+                            else:  \textcolor{blue}{# if specialty_Diabetes And Endocrinology > 0.5}
+                                return \textcolor{red}{[[20.428]]}
+                        else:  #\textcolor{blue}{ if specialty_Care Of The Elderly > 0.5}
+                            if hospital_County Hospital <= 0.5:
+                                return \textcolor{red}{[[22.40190476]]}
+                            else:  \textcolor{blue}{# if hospital_County Hospital > 0.5}
+                                return \textcolor{red}{[[30.08433735]]}
+                    else:  \textcolor{blue}{# if hospital_Ysbyty Aneurin Bevan > 0.5}
+                        return \textcolor{red}{[[23.80604134]]}
+                else:  \textcolor{blue}{# if hospital_Nevill Hall Hospital > 0.5}
+                    if specialty_Rehabilitation <= 0.5:
+                        return \textcolor{red}{[[11.72972973]]}
+                    else: \textcolor{blue}{# if specialty_Rehabilitation > 0.5}
+                        return \textcolor{red}{[[29.56521739]]}
+            else: \textcolor{blue}{# if hospital_St Woolos Acute Hospital > 0.5}
+                return \textcolor{red}{[[6.9055794]]}
+        else:  \textcolor{blue}{# if hospital_Royal Gwent Hospital > 0.5}
+            if specialty_General Surgery <= 0.5:
+                if specialty_Trauma & Orthopaedic <= 0.5:
+                    return \textcolor{red}{[[9.71439936]]}
+                else: \textcolor{blue}{# if specialty_Trauma & Orthopaedic > 0.5}
+                    return \textcolor{red}{[[16.85333333]]}
+            else:  \textcolor{blue}{# if specialty_General Surgery > 0.5}
+                return \textcolor{red}{[[17.96407186]]}
+\end{alltt}}
+%\end{landscape}
+
+\section{Classification Tree Groupings}\label{app:secclassification}
+This section provides the classification groupings and the LOS groupings for each of the end nodes. Comments are shown in \textcolor{blue}{blue}, with number of patients falling into each category denoted in \textcolor{red}{red} in a [$<$1,$\geq$1] structure. 
+
+\scriptsize{
+\begin{alltt}
+    if admission_method_Elective - waiting list <= 0.5:
+        if admission_method_Elective - booked <= 0.5:
+            if admission_method_Elective - planned <= 0.5:
+                if specialty_Accident & Emergency <= 0.5:
+                    if specialty_General Medicine <= 0.5:
+                        return \textcolor{red}{[[ 2652. 49868.]]}
+                    else:  \textcolor{blue}{# if specialty_General Medicine > 0.5}
+                        return \textcolor{red}{[[1242. 9099.]]}
+                else:  \textcolor{blue}{# if specialty_Accident & Emergency > 0.5}
+                    return \textcolor{red}{[[1848. 2500.]]}
+            else:  \textcolor{blue}{# if admission_method_Elective - planned > 0.5}
+                if specialty_Trauma & Orthopaedic <= 0.5:
+                    return \textcolor{red}{[[1289.   17.]]}
+                else:  \textcolor{blue}{# if specialty_Trauma & Orthopaedic > 0.5}
+                    return \textcolor{red}{[[ 5. 29.]]}
+        else:  \textcolor{blue}{# if admission_method_Elective - booked > 0.5}
+            if specialty_Trauma & Orthopaedic <= 0.5:
+                return \textcolor{red}{[[4555.  141.]]}
+            else:  \textcolor{blue}{# if specialty_Trauma & Orthopaedic > 0.5}
+                return \textcolor{red}{[[22. 61.]]}
+    else:  \textcolor{blue}{# if admission_method_Elective - waiting list > 0.5}
+        if specialty_Trauma & Orthopaedic <= 0.5:
+            if specialty_General Surgery <= 0.5:
+                if specialty_Urology <= 0.5:
+                    if specialty_Ear Nose & Throat <= 0.5:
+                        if specialty_Gynaecology <= 0.5:
+                            if specialty_Respiratory <= 0.5:
+                                return \textcolor{red}{[[30951.   700.]]}
+                            else:  \textcolor{blue}{# if specialty_Respiratory > 0.5}
+                                return \textcolor{red}{[[794. 224.]]}
+                        else:  \textcolor{blue}{# if specialty_Gynaecology > 0.5}
+                            if Day_1 <= 0.5:
+                                return \textcolor{red}{[[951. 462.]]}
+                            else:  \textcolor{blue}{# if Day_1 > 0.5}
+                                return \textcolor{red}{[[ 0. 72.]]}
+                    else:  \textcolor{blue}{# if specialty_Ear Nose & Throat > 0.5}
+                        return \textcolor{red}{[[264. 330.]]}
+                else:  \textcolor{blue}{# if specialty_Urology > 0.5}
+                    if hospital_Royal Gwent Hospital <= 0.5:
+                        return \textcolor{red}{[[1050.   28.]]}
+                    else:  \textcolor{blue}{# if hospital_Royal Gwent Hospital > 0.5}
+                        if Day_5 <= 0.5:
+                            if diagnosis_Malignant neoplasm: Bladder, unspecified <= 0.5:
+                                if diagnosis_Hyperplasia of prostate <= 0.5:
+                                    return \textcolor{red}{[[2209.  856.]]}
+                                else:  \textcolor{blue}{# if diagnosis_Hyperplasia of prostate > 0.5}
+                                    return \textcolor{red}{[[103. 176.]]}
+                            else:  \textcolor{blue}{# if diagnosis_Malignant neoplasm: Bladder, unspecified > 0.5}
+                                return \textcolor{red}{[[106. 196.]]}
+                        else:  \textcolor{blue}{# if Day_5 > 0.5}
+                            return \textcolor{red}{[[1410.  245.]]}
+            else:  \textcolor{blue}{# if specialty_General Surgery > 0.5}
+                if diagnosis_Calculus of gallbladder with other cholecystitis <= 0.5:
+                    if No_Scans <= 0.5:
+                        if diagnosis_Diverticular disease of large intestine without perforation or abscess <= 0.5:
+                            if hospital_Ysbyty Ystrad Fawr <= 0.5:
+                                if diagnosis_Malignant neoplasm: Breast, unspecified <= 0.5:
+                                    if diagnosis_Unilateral or unspecified inguinal hernia, without obstruction or gangrene <= 0.5:
+                                        return \textcolor{red}{[[5121. 1686.]]}
+                                    else:  \textcolor{blue}{# if diagnosis_Unilateral or unspecified inguinal hernia, without obstruction or gangrene > 0.5}
+                                        return \textcolor{red}{[[176. 194.]]}
+                                else:  \textcolor{blue}{# if diagnosis_Malignant neoplasm: Breast, unspecified > 0.5}
+                                    return \textcolor{red}{[[ 62. 116.]]}
+                            else:  \textcolor{blue}{# if hospital_Ysbyty Ystrad Fawr > 0.5}
+                                return \textcolor{red}{[[1282.  119.]]}
+                        else:  \textcolor{blue}{# if diagnosis_Diverticular disease of large intestine without perforation or abscess > 0.5}
+                            return \textcolor{red}{[[834.   9.]]}
+                    else:  \textcolor{blue}{# if No_Scans > 0.5}
+                        return \textcolor{red}{[[ 18. 100.]]}
+                else:  \textcolor{blue}{# if diagnosis_Calculus of gallbladder with other cholecystitis > 0.5}
+                    return \textcolor{red}{[[ 79. 223.]]}
+        else:  \textcolor{blue}{# if specialty_Trauma & Orthopaedic > 0.5}
+            if hospital_Ysbyty Ystrad Fawr <= 0.5:
+                if diagnosis_Gonarthrosis, unspecified <= 0.5:
+                    if diagnosis_Coxarthrosis, unspecified <= 0.5:
+                        if diagnosis_Carpal tunnel syndrome <= 0.5:
+                            if diagnosis_Palmar fascial fibromatosis [Dupuytren] <= 0.5:
+                                return \textcolor{red}{[[1379. 1726.]]}
+                            else:  \textcolor{blue}{# if diagnosis_Palmar fascial fibromatosis [Dupuytren] > 0.5}
+                                return \textcolor{red}{[[154.  17.]]}
+                        else:  \textcolor{blue}{# if diagnosis_Carpal tunnel syndrome > 0.5}
+                            return \textcolor{red}{[[317.   9.]]}
+                    else:  \textcolor{blue}{# if diagnosis_Coxarthrosis, unspecified > 0.5}
+                        return \textcolor{red}{[[ 108. 1030.]]}
+                else:  \textcolor{blue}{# if diagnosis_Gonarthrosis, unspecified > 0.5}
+                    return \textcolor{red}{[[  74. 1577.]]}
+            else:  \textcolor{blue}{# if hospital_Ysbyty Ystrad Fawr > 0.5}
+                return \textcolor{red}{[[1073.  156.]]}
+\end{alltt}
+}
+\section{Deterministic Parameters}
+{\footnotesize
+\begin{longtable}{lp{12cm}}\toprule
+    
+        \textbf{Parameter} & \textbf{Deterministic Parameters} \\ \midrule
+        Bands ($\mathcal{B})$ & b = [band5, band6, band7]\\  \midrule
+        Specialties ($\mathcal{S})$ & s = [Accident and Emergency, Anaesthetics, Cardiology, Care of the Elderly, Community Medicine, Dermatology, Diabetes and Endocrinology, Ear, Nose and Throat, Gastroenterology, General Medicine, General Surgery, GP Other, Gynaecology, Haematology,  Infectious Diseases, Intermediate Care, Maxillo-Facial, Neurology, Ophthalmology, Pain, Plastic Surgery, Radiology, Radiotherapy and Oncology, Rehabilitation, Respiratory, Restorative Dentistry, Rheumatology, Trauma and Orthopaedic, Urology]\\\midrule
+        Hospitals ($\mathcal{H}$) & h = [Royal Gwent Hospital, St Woolos Acute Hospital, St Woolos Community Hospital, Ysbyty Ystrad Fawr, Rhymney Integrated Health and Social Care Centre, Ysbyty Aneurin Bevan, County Hospital, Nevill Hall Hospital, Chepstow Community Hospital, Monnow Vale Integrated Health and Social Care Centre, University Hospital of Wales, Offsite, Outsource, Outsource - CareUK] \\\midrule
+        Regions ($\mathcal{R}$) & r = [Region1, Region2, Region3, Region4, Region5, Region6]\\\midrule
+        c$^\textnormal{staff, 1st}_{b}$ & [$\pounds$338.88,	$\pounds$419.52, $\pounds$516.96]\\\midrule
+        $UB^\textnormal{max, bed, 1st}_{h}$ & [588, 28, 75, 163, 12, 80, 73, 309, 26, 16, 90]	   \\\midrule        
+        c$^\textnormal{bed, 1st}_{s,h}$ & $\begin{bmatrix}
+        345&	0&	0&	0&	0&	0&	0&	0&	149&	0&	0&	0 \\
+        526&	0&	0&	0&	0&	0&	0&	0&	1516&	0&	0&	0 \\
+        396&	0&	0&	0&	0&	0&	0&	0&	895&	0&	0&	551 \\
+        457&	0&	755&	493&	0&	542&	0&	472&	743&	577&	0&	0 \\
+        0&	0&	0&	942&	0&	0&	0&	1100&	0&	1021&	0&	0 \\
+        1672&	216&	1232&	2404&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        296&	0&	0&	1270&	0&	0&	0&	0&	1497&	0&	0&	0 \\
+        481&	0&	0&	501&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        448&	402&	0&	639&	0&	0&	0&	0&	959&	0&	0&	832 \\
+        390&	0&	0&	94&	0&	65&	0&	0&	611&	0&	0&	0 \\
+        472&	0&	0&	304&	0&	0&	0&	0&	539&	541&	0&	849 \\
+        0&	0&	0&	0&	172&	0&	0&	0&	0&	325&443 &	360 \\
+        1007&	0&	0&	528&	0&	0&	0&	0&	292&	0&	0&	241 \\
+        1299&	1277&	0&	1218&	0&	0&	0&	0&	1070&	0&	0&	1176 \\
+        711&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        0&	0&	0&	0&	0&	39&	0&	197&	0&	0&	0&	0 \\
+        2026&	1940&	0&	0&	0&	0&	0&	0&	264&	0&	0&	0 \\
+        1273&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        957&	0&	0&	369&	0&	0&	0&	0&	1416&	0&	0&	174 \\
+        124&	0&	0&	111&	0&	0&	0&	134&	143&	0&	0&	0 \\
+        0&	0&	0&	0&	0&	0&	0&	0&	1308&	0&	0&	496 \\
+        945&	0&	0&	0&	0&	0&	0&	0&	1097&	0&	0&	0 \\
+        633&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0&	1545 \\
+        1973&	1274&	972&	975&	0&	1021&	0&	1983&	1987&	1455&	0&	0 \\
+        330&	0&	0&	0&	0&	0&	0&	0&	566&	0&	0&	0 \\
+        141&	0&	0&	139&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        631&	0&	0&	621&	0&	0&	0&	0&	536&	0&	0&	0 \\
+        678&	651&	0&	610&	0&	0&	0&	0&	873&	0&	0&	0 \\
+        102&	214&	0&	79&	0&	0&	0&	0&	378&	0&	0&	1122 \\
+   
+        \end{bmatrix}$
+        \\\midrule        
+        R$_{s,b}$ & 
+        $\begin{bmatrix}
+            0.250 &	0.25 &	0.25& \\
+            0.250 &	0.25 &	0.25& \\
+            0.125 &	0.125 &	0.125& \\
+            0.1 &	0.1 &	0.1& \\
+            0.1 &	0.1 &	0.1& \\
+            0.1 &	0.1 &	0.1& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.25 &	0.25 &	0.25& \\
+            0.25 &	0.25 &	0.25& \\
+            0.1 &	0.1 &	0.1& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.1 &	0.1 &	0.1& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.1 &	0.1 &	0.1& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.25 &	0.25 &	0.25& \\
+            0.125 &	0.125 &	0.125& \\
+
+        \end{bmatrix}$ \\\midrule
+        K$_{s,h}$ & 
+        $\begin{bmatrix}
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	75&	163&	0&	80&	73&	309&	26&	0&	0\\
+        588&	0&	0&	163&	0&	0&	73&	0&	26&	0&	0\\
+        0&	28&	75&	163&	0&	0&	0&	0&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	0&	0&	0&	0\\
+        588&	28&	0&	163&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	0&	163&	0&	80&	0&	309&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	309&	26&	0&	80\\
+        0&	0&	0&	0&	10&	0&	0&	0&	26&	16&	80\\
+        588&	0&	0&	163&	0&	0&	0&	309&	0&	0&	80\\
+        588&	28&	0&	163&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0\\
+        0&	0&	0&	0&	0&	80&	73&	0&	0&	0&	0\\
+        588&	28&	0&	0&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	0&	163&	0&	0&	73&	309&	0&	0&	0\\
+        0&	0&	0&	0&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	80\\
+        588&	28&	75&	163&	0&	80&	73&	309&	26&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	0&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	309&	0&	0&	0\\
+        588&	28&	0&	163&	0&	0&	0&	309&	0&	0&	0\\
+        588&	28&	0&	163&	0&	0&	0&	309&	0&	0&	80        
+        \end{bmatrix}$\\\midrule     
+    \caption{Data and Parameters Used Within Deterministic Model}
+    \label{tab:appdetermpa}
+\end{longtable}}
+
+\section{Two-Stage Stochastic Parameters}
+%\begin{landscape}
+{\footnotesize
+\begin{longtable}{lp{12cm}}\toprule
+    
+        \textbf{Parameter} & \textbf{Two-Stage Stochastic Parameters} \\ \midrule
+        Bands ($\mathcal{B})$ & b = [band5, band6, band7]\\  \midrule
+        Specialties ($\mathcal{S})$ & s = [Accident and Emergency, Anaesthetics, Cardiology, Care of the Elderly, Community Medicine, Dermatology, Diabetes and Endocrinology, Ear, Nose and Throat, Gastroenterology, General Medicine, General Surgery, GP Other, Gynaecology, Haematology, Infectious Diseases, Intermediate Care, Maxillo-Facial, Neurology, Ophthalmology, Pain, Plastic Surgery, Radiology, Radiotherapy and Oncology, Rehabilitation, Respiratory, Restorative Dentistry, Rheumatology, Trauma and Orthopaedic, Urology]\\\midrule
+        Hospitals ($\mathcal{H}$) & h = [Royal Gwent Hospital, St Woolos Acute Hospital, St Woolos Community Hospital, Ysbyty Ystrad Fawr, Rhymney Integrated Health and Social Care Centre, Ysbyty Aneurin Bevan, County Hospital, Nevill Hall Hospital, Chepstow Community Hospital, Monnow Vale Integrated Health and Social Care Centre, University Hospital of Wales, Offsite, Outsource, Outsource - CareUK] \\\midrule
+        Regions ($\mathcal{R}$) & r = [Region1, Region2, Region3, Region4, Region5, Region6]\\\midrule
+        Scenarios ($\mathcal{S}$) & s = [Scenario1, Scenario2, Scenario3, Scenario 4]\\\midrule
+        p$_{k}$ & [0.25, 0.25, 0.25, 0.25] \\\midrule
+        c$^\textnormal{staff, 1st}_{b}$ & [$\pounds$338.88,	$\pounds$419.52, $\pounds$516.96]\\\midrule
+        c$^\textnormal{staff, 2nd}_{b}$ & [$\pounds$454.80,	$\pounds$560.64, $\pounds$658.08] \\\midrule
+        $UB^\textnormal{max, bed, 1st}_{h}$ & [588, 28, 75, 163, 12, 80, 73, 309, 26, 16, 20, 20, 20 20]	   \\\midrule
+        $UB^\textnormal{max, bed, 2nd}_{h}$ & [177, 9, 28, 49, 4, 24, 22, 93, 8, 5, 6, 6, 6, 6]	   \\\midrule
+               
+        c$^\textnormal{bed, 1st}_{s,h}$ & $\begin{bmatrix}
+        345&	0&	0&	0&	0&	0&	0&	0&	149&	0&	0&	0 \\
+        526&	0&	0&	0&	0&	0&	0&	0&	1516&	0&	0&	0 \\
+        396&	0&	0&	0&	0&	0&	0&	0&	895&	0&	0&	551 \\
+        457&	0&	755&	493&	0&	542&	0&	472&	743&	577&	0&	0 \\
+        0&	0&	0&	942&	0&	0&	0&	1100&	0&	1021&	0&	0 \\
+        1672&	216&	1232&	2404&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        296&	0&	0&	1270&	0&	0&	0&	0&	1497&	0&	0&	0 \\
+        481&	0&	0&	501&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        448&	402&	0&	639&	0&	0&	0&	0&	882&	0&	0&	823 \\
+        390&	0&	0&	94&	0&	65&	0&	0&	611&	0&	0&	0 \\
+        472&	0&	0&	304&	0&	0&	0&	0&	539&	541&	0&	849 \\
+        0&	0&	0&	0&	172&	0&	0&	0&	0&	325&443 &	360 \\
+        1007&	0&	0&	528&	0&	0&	0&	0&	292&	0&	0&	241 \\
+        1299&	1277&	0&	1218&	0&	0&	0&	0&	1070&	0&	0&	1176 \\
+        711&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        0&	0&	0&	0&	0&	39&	0&	197&	0&	0&	0&	0 \\
+        2026&	1940&	0&	0&	0&	0&	0&	0&	264&	0&	0&	0 \\
+        1273&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        957&	0&	0&	369&	0&	0&	0&	0&	1416&	0&	0&	174 \\
+        124&	0&	0&	111&	0&	0&	0&	134&	143&	0&	0&	0 \\
+        0&	0&	0&	0&	0&	0&	0&	0&	1308&	0&	0&	496 \\
+        945&	0&	0&	0&	0&	0&	0&	0&	1097&	0&	0&	0 \\
+        633&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0&	1545 \\
+        1973&	1274&	972&	975&	0&	1021&	0&	1983&	1987&	1455&	0&	0 \\
+        330&	0&	0&	0&	0&	0&	0&	0&	566&	0&	0&	0 \\
+        141&	0&	0&	139&	0&	0&	0&	0&	0&	0&	0&	0 \\
+        631&	0&	0&	621&	0&	0&	0&	0&	536&	0&	0&	0 \\
+        678&	651&	0&	610&	0&	0&	0&	0&	873&	0&	0&	0 \\
+        102&	214&	0&	79&	0&	0&	0&	0&	378&	0&	0&	1122 \\
+   
+        \end{bmatrix}$
+        \\\midrule
+        c$^\textnormal{bed, 2nd}_{s,h}$ & $\begin{bmatrix}
+        414	&0	&0	&0	&0	&0	&0	&0&178.80&	0&	0&	0 \\
+        631.20&	0	&0	&0	&0&	0&	0	&0	&1819.20&	0&	0	&0 \\
+        475.20	&0	&0	&0	&0	&0	&0&	0&	1074	&0&	0	&661.20 \\
+        548.40	&0	&906	&591.60	&0	&650.40	&0	&566.40	&891.60	&692.40&0	&0 \\
+        0&	0	&0	&1130.40&	0&	0&	0	&1320	&0	&1225.20	&0&	0 \\
+        2006.40&	259.20	&1478.40&2884.80&	0&	0	&0&	0&	0&	0&	0	&0 \\
+        355.20	&0	&0&	1524&	0	&0	&0	&0	&1796.40	&0	&0	&0 \\
+        577.20	&0	&0	&601.20	&0	&0	&0	&0	&0&	0&	0&	0 \\
+        537.60	&482.40	&0	&766.80&	0&	0	&0	&0	&1150.80&	0&0	&998.40 \\
+        468	&0	&0	&112.80&	0	&78	&0&	0	&733.20&	0	&0&	0 \\
+        566.40&	0&	0&	364.80	&0&	0	&0&	0	&646.80	&649.20&	0&	1018.80 \\
+        0&	0	&0	&0	&206.40	&0	&0	&0	&0	&390	&531.60&	432 \\
+        1208.40&	0	&0	&633.60&	0	&0&	0&	0	&350.4	&0&	0&	289.20 \\
+        1558.80	&1532.40	&0	&1461.60	&0	&0	&0	&0	&1284&	0&	0&	1411.20 \\
+        853.20	&0	&0&	0&	0	&0	&0&	0	&0&	0&	0&0 \\
+        0&	0&0	&0	&0&	46.80	&0	&236.40&	0	&0	&0&	0 \\
+        2431.20	&2328&	0&	0	&0	&0&	0	&0	&316.80&	0	&0&	0 \\
+        1527.60	&0&	0&	0	0	&0	&0&	0	&0	&0&	0&	0 \\
+        1148.40	&0&	0&	442.80	&0	&0&0	&0	&1699.20	&0	&0	&208.80 \\
+        148.80	&0&	0	&133.20	&0	&0&	0	&160.80&	171.60	&0	&0&	0 \\
+        0&	0	&0	&0	0&	0	&0	&0&	1569.60	&0	&0	&595.20 \\
+        1134	&0	&0	0&	0	&0	&0	&0&	1316.40	&0	&0	&0 \\
+        759.60	&0	&0	0	&0	&0	&0&	0	&0&	0	&0&	1854 \\
+        2367.60	&1528.80&	1166.40&	1170&	0	&1225.20&	0	&2379.60&	2384.40	&1746	&0&	0 \\
+        396&	0	&0	0	&0&	0&	0	&0&	679.20&	0&	0&	0 \\
+        169.20	&0	0&	166.80&	0&	0	&0&	0&	0&	0&	0&0 \\
+        757.20	&0	0	&745.20&	0&	0	&0&	0&	643.20&	0&	0	&0 \\
+        813.60	&781.20	&0	&732	0	&0	&0&	0&	1047.60	&0	&0	&0 \\
+        122.40	&256.80	&0	&94.80	&0	&0&	0&	0&453.60	&0	&0	&1346.40 \\       
+        \end{bmatrix}$
+        \\\midrule
+        
+        R$_{s,b}$ & 
+        % $\begin{bmatrix}
+        % \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+        % \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{10} & \frac{1}{10} & \frac{1}{10} \\
+        % \frac{1}{10} & \frac{1}{10} & \frac{1}{10} \\
+        % \frac{1}{10} & \frac{1}{10} & \frac{1}{10} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{10} & \frac{1}{10} & \frac{1}{10} \\
+        % \frac{1}{10} & \frac{1}{10} & \frac{1}{10} \\
+        % \frac{1}{10} & \frac{1}{10} & \frac{1}{10} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+        % \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+        % \frac{1}{10} & \frac{1}{10} & \frac{1}{10} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{10} & \frac{1}{10} & \frac{1}{10} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+        % \frac{1}{8} & \frac{1}{8} & \frac{1}{8} \\
+        % \end{bmatrix}$
+        $\begin{bmatrix}
+            0.250 &	0.25 &	0.25& \\
+            0.250 &	0.25 &	0.25& \\
+            0.125 &	0.125 &	0.125& \\
+            0.1 &	0.1 &	0.1& \\
+            0.1 &	0.1 &	0.1& \\
+            0.1 &	0.1 &	0.1& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.25 &	0.25 &	0.25& \\
+            0.25 &	0.25 &	0.25& \\
+            0.1 &	0.1 &	0.1& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.1 &	0.1 &	0.1& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.1 &	0.1 &	0.1& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.125 &	0.125 &	0.125& \\
+            0.25 &	0.25 &	0.25& \\
+            0.125 &	0.125 &	0.125& \\
+
+        \end{bmatrix}$ \\\midrule
+        K$_{s,h}$ & 
+        $\begin{bmatrix}
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	75&	163&	0&	80&	73&	309&	26&	0&	0\\
+        588&	0&	0&	163&	0&	0&	73&	0&	26&	0&	0\\
+        0&	28&	75&	163&	0&	0&	0&	0&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	0&	0&	0&	0\\
+        588&	28&	0&	163&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	0&	163&	0&	80&	0&	309&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	309&	26&	0&	80\\
+        0&	0&	0&	0&	10&	0&	0&	0&	26&	16&	80\\
+        588&	0&	0&	163&	0&	0&	0&	309&	0&	0&	80\\
+        588&	28&	0&	163&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0\\
+        0&	0&	0&	0&	0&	80&	73&	0&	0&	0&	0\\
+        588&	28&	0&	0&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	0&	163&	0&	0&	73&	309&	0&	0&	0\\
+        0&	0&	0&	0&	0&	0&	0&	309&	0&	0&	80\\
+        588&	0&	0&	0&	0&	0&	0&	0&	0&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	80\\
+        588&	28&	75&	163&	0&	80&	73&	309&	26&	0&	0\\
+        588&	0&	0&	0&	0&	0&	0&	309&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	0&	0&	0&	0\\
+        588&	0&	0&	163&	0&	0&	0&	309&	0&	0&	0\\
+        588&	28&	0&	163&	0&	0&	0&	309&	0&	0&	0\\
+        588&	28&	0&	163&	0&	0&	0&	309&	0&	0&	80        
+        \end{bmatrix}$\\\midrule
+        
+       
+    \caption{Data and Parameters Used within Two-Stage Stochastic Model}
+    \label{tab:appstochpa}
+\end{longtable}}
+
+
+\end{document}

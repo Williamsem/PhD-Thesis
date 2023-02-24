@@ -1,0 +1,91 @@
+%\documentclass[
+%    a4paper,        % paper size
+%    11pt,           % default font size
+%]{memoir}
+
+%\input{includes/preamble.tex}
+\documentclass[12pt, a4paper]{book}
+\input{includes/preamble1}
+%\usepackage[a4paper, top=25.4mm, bottom=20.5mm, right=20.5mm, left=40mm]{geometry}
+\usepackage{fancyhdr}
+\setcounter{tocdepth}{2}
+
+%\bibliography{chapter3/file1.bib}
+%\bibliographystyle{plain}
+%\bibliography{}
+\begin{document}
+\raggedbottom
+
+\pagestyle{none}
+
+\input{includes/title.tex}
+\cleardoublepage
+
+\frontmatter
+\pagestyle{chapterstyle}  %set header-footer style for front matter
+
+\input{abstract.tex}
+\input{includes/declarations.tex}
+\input{includes/acknowledgements.tex}
+\input{includes/dedication.tex}
+\input{includes/Dissemination}
+\tableofcontents
+\begin{onehalfspace}
+      \addcontentsline{toc}{chapter}{\listfigurename}\listoffigures
+      \addcontentsline{toc}{chapter}{\listtablename}\listoftables
+      %\addcontentsline{toc}{chapter}{\listtablename}\listoftables
+\end{onehalfspace}
+\mainmatter
+% hereafter begins the meat of the thesis
+\pagestyle{normal} %set header-footer style rest of report
+%\include{thesis/chapters/introduction} 
+%\onehalfspacing
+ 
+\include{Chapters/Chapter1/chapter1}
+\include{Chapters/Chapter2/chapter2}
+\include{Chapters/Chapter3New/chapter3}
+\include{Chapters/Chapter4New/chapter4}
+\include{Chapters/Chapter5/chapter5}
+%\include{Chapters/Test/Test2}
+%\include{Chapters/Test/Test3}
+%\include{Chapters/Test/Test4}
+%\include{Chapters/Chapter3/chapter3}
+%\include{Chapters/Chapter4/chapter4}
+% \include{Chapters/Chapter4/CART Figures/CART1}
+% \include{Chapters/Chapter5/chapter5}
+\include{Chapters/Chapter6/chapter6}
+% \include{Chapters/Chapter7/chapter7}
+\include{Chapters/Chapter8/chapter8}
+
+
+
+
+%\include{chapter_2/chapter2.tex}
+
+%https://www.youtube.com/watch?v=LoBC8zIB-3k
+%\subfile{chapter_3/chapter3.tex}
+
+%\subfile{chapter_6/chapter6.tex}
+%\appendix
+\begin{appendices}
+    \input{Chapters/appendix_specialties_hospitals.tex}
+    \input{Chapters/appendix-literature-review.tex}
+    \input{Chapters/appendix_analysis_chapter.tex}
+   % \input{Chapters/appendix_experiment.tex}
+    % \input{Chapters/appendix-merging-data.tex}
+    %\input{chapters/appendix_comparemodels.tex}
+    %\input{chapters/appendix_example1.tex}
+    %\input{chapters/appendix_example2.tex}
+\end{appendices}
+%\subfile{appendix1.tex}
+\clearpage
+\begin{singlespace}
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{plain}
+\bibliography{includes/bibliography.bib}
+
+\end{singlespace}
+%\addcontentsline{toc}{chapter}{Appendices}
+
+
+\end{document}

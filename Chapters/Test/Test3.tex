@@ -1,0 +1,181 @@
+\documentclass[../thesis.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Experimental Analysis of the Predictive and Prescriptive Models}\label{chp:Experimental Analysis}
+
+\section{Data Introduction}
+Data
+\begin{itemize}
+    \item Keep it brief
+    \item Two data types
+    \item Key results
+\end{itemize}
+\section{Predictive Analytics Results}
+
+\subsection{Linear Regression}
+Linear regression was performed on the fourteen variables to determine the highest influence on LOS. Table \ref{Tab:ContinuousLOS-Lin}, displays both the R$^{2}$ and adjusted R$^{2}$ values.
+
+
+
+\begin{table}[h!]
+\centering\scalebox{1}{
+\begin{tabular}{lcc}
+\toprule
+\textbf{Continuous Variables} & \textbf{R$^2$ Value}&\textbf{Adjusted R$^2$ Value} \\ \midrule 
+Age & 0.204 & 0.204 \\
+Frailty Score & 0.043 & 0.043 \\
+No. of Scans & 0.030 & 0.030 \\ \midrule
+\textbf{Categorical Variables} & \textbf{R$^2$ Value}&\textbf{Adjusted R$^2$ Value} \\ \midrule
+Age Group &  0.051 & 0.051 \\
+Admission Method & 0.282 & 0.282  \\
+Admission Source & 0.195 & 0.195 \\
+Day of Admission & 0.002& 0.002\\
+Diagnosis & 0.273 & 0.261\\
+Frailty Group & 0.028& 0.028\\
+Hospital & 0.182 & 0.181 \\
+ICD10 - First Letter & 0.092& 0.092\\
+Scan Y/N & 0.025 & 0.025 \\
+Month of Admission & 0.000& 0.000\\
+Specialty & 0.288 & 0.288\\\bottomrule
+\end{tabular}}
+\caption{Linear Regression Result}
+\label{Tab:ContinuousLOS-Lin}
+\end{table}
+
+The variables can be considered as two different data types, continuous and categorical. Within the continuous variables, age produced the highest R$^{2}$ value of 0.204. This means 20.4\% of the LOS variation is explained by Age. The model can be denoted by: 
+\begin{equation}
+    Y = 0.375x - 22.635
+\end{equation}
+where $x$ is the age of the patient.
+Therefore, for each 1 year increment in age, the LOS will increase by 0.375 days.
+
+Similarly, we can calculate the linear regression model for categorical variables within Table \ref{Tab:ContinuousLOS-Lin}. Specialty provided the largest R$^{2}$ value of 0.288. Within the specialty category, there are 29 subcategories of different specialities. In order to be able to predict LOS, we can further analyse each variable. Table \ref{tab:linreg-specialty} denotes the associated linear regression values for specialty. When one $x$ variable is selected, the corresponding value is the LOS. For example, if the specialty of Accident \& Emergency is chosen, the LOS will be 2.2673 days. The value column displays the variation in the average LOS between each of the specialties.
+
+% where $x_{1}$ = Accident \& Emergency, $x_{2}$ = Anaesthetics, $x_{3}$ = Cardiology, $x_{4}$ = Care of the Elderly, $x_{5}$ = Community Medicine, $x_{6}$ = Dermatology, $x_{7}$ = Diabetes \& Endocrinology, $x_{8}$ = Ear, Nose \& Throat, $x_{9}$ = GP Other, $x_{10}$ = Gastroenterology, $x_{11}$ = General Medicine, $x_{12}$ = General Surgery, $x_{13}$ = Gynaecology, $x_{14}$ = Haematology, $x_{15}$ = Infectious Diseases, $x_{16}$ = Intermediate Care, $x_{17}$ = Maxillo-Facial, $x_{18}$ = Neurology, $x_{19}$ = Opthalmology, $x_{20}$ = Pain, $x_{21}$ = Plastic Surgery, $x_{22}$ = Radiology, $x_{23}$ = Radiotherapy \& Oncology, $x_{24}$ = Rehabilitation, $x_{25}$ = Respiratory, $x_{26}$ = Restorative Dentistry, $x_{27}$ = Rheumatology, $x_{28}$ = Trauma \& Orthopaedic ,$x_{29}$ = Urology.\\
+% \begin{align}
+%     Y =& 2.2673x_1 + 14.9517x_2 +4.647x_3 +12.1101x_4 + 34.235x_5 +0.2616x_6 +\nonumber \\  &11.6161x_7+
+%     2.75x_8 +39.2603x_9 + 2.1382x_{10} +8.4519x_{11} + 3.7149x_{12} +\nonumber\\ &1.6536x_{13} + 0.7974x_{14} + 
+%     11.6289x_{15} + 14.3725x_{16} + 0.6018x_{17} + 5.6131x_{18}+\nonumber\\ 
+%      &0.1307x_{19} + 0.0080x_{20} + 0.1128x_{21} + 0.3548x_{22} + 13.6667x_{23} + 28.7732x_{24} + \nonumber\\ 
+%      &7.7985x_{25} + 0x_{26} + 2.3333x_{27} + 6.6658x_{28} + 0.9932x_{29}
+% \end{align}
+
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{lcc} \toprule
+      Specialty Type   & $x$ Variable & Value \\ \midrule
+      Accident \& Emergency & $x_{1}$ & 2.2673\\ 
+      Anaesthetics & $x_{2}$ & 14.9517 \\
+      Cardiology & $x_{3}$ & 4.647\\
+      Care of the Elderly & $x_{4}$ & 12.1101 \\
+      Community Medicine & $x_{5}$ & 34.235\\
+      Dermatology & $x_{6}$ & 0.2616\\
+      Diabetes \& Endocrinology & $x_{7}$ & 11.6161\\
+      Ear, Nose \& Throat & $x_{8}$ &2.75 \\
+      GP Other & $x_{9}$ & 39.2603\\
+      Gastroenterology & $x_{10}$ &2.1382 \\
+      General Medicine & $x_{11}$ & 8.4519\\
+      General Surgery & $x_{12}$ & 3.7149\\
+      Gynaecology & $x_{13}$ & 1.6536\\
+      Haematology & $x_{14}$ & 0.7974\\
+      Infectious Diseases & $x_{15}$ &11.6289 \\
+      Intermediate Care & $x_{16}$ &14.3725 \\
+      Maxillo-Facial & $x_{17}$ & 0.6018\\
+      Neurology & $x_{18}$ & 5.6131 \\
+      Opthalmology & $x_{19}$ &0.1307 \\
+      Pain & $x_{20}$ & 0.0080\\
+      Plastic Surgery & $x_{21}$ & 0.1128\\
+      Radiology & $x_{22}$ & 0.3548\\
+      Radiotherapy \& Oncology & $x_{23}$ & 13.6667\\
+      Rehabilitation & $x_{24}$ & 28.7732\\
+      Respiratory & $x_{25}$ & 7.7985\\
+      Restorative Dentistry & $x_{26}$ & 0\\
+      Rheumatology & $x_{27}$ & 2.3333\\
+      Trauma \& Orthopaedic & $x_{28}$ & 6.6658\\
+      Urology & $x_{29}$ &0.9932 \\\bottomrule
+    \end{tabular}
+    \caption{Linear Regression Results - Specialty}
+    \label{tab:linreg-specialty}
+\end{table}
+
+
+\subsection{Logistic Regression}
+Logistic regression was performed to determine the effect of grouping LOS into discharged on the same day and admitted overnight.
+
+Table \ref{} displays the three scoring measures against each
+
+
+
+\begin{table}[h!]
+\centering\scalebox{1}{
+\begin{tabular}{lccc}
+\toprule
+{\textbf{Continuous Variables}} &\textbf{Accuracy}& \textbf{Precision} & \textbf{Recall}\\ \midrule
+Age  & 0.6037 &0.6259 & 0.6768\\
+Frailty Score  & 0.5860 & 0.7444& 0.3648\\
+No. of Scans & 0.5445 & 0.5445 & 1.0\\
+\midrule
+{\textbf{Categorical Variables}} &\textbf{Accuracy}& \textbf{Precision} & \textbf{Recall}\\ \midrule
+Age Group & 0.6037 & 0.6259 & 0.6768\\
+Admission Method & 0.8764 &0.9137 & 0.8536  \\
+Admission Source & 0.5829 & 0.5663 & 1.0 \\%\multicolumn{3}{c}{Too many variables}\\
+Day of Admission & 0.5474 & 0.8343 & 0.8389\\
+Diagnosis  & 0.8128 & 0.7967 & 0.8811 \\
+Frailty Group  & 0.5871 & 0.7451 & 0.3673\\
+Hospital& 0.6171 & 0.5996 & 0.8933 \\
+ICD10 - First Letter & 0.7554 & 0.7399 & 0.8494 \\
+Scan Y/N & 0.8558 & 0.8558& 1.0\\
+Month of Admission & 0.5445 & 0.5445& 1.0 \\
+Specialty & 0.8008 & 0.8349 & 0.7905 \\\bottomrule
+\end{tabular}}
+\caption{Logistic Regression Result}
+\label{Tab:ContinuousLOS-Log}
+\end{table}
+
+We can determine the likelihood of falling into one of the two LOS groupings using the logit function. Equation \ref{eq:logit} displayed the general formula using age, a continuous variable, as an example.
+\begin{equation}\label{eq:logit}
+    logit(p) = log\left(\frac{p}{(1-p)}\right) = -5.0746 +0.0681*Age
+\end{equation}
+If age is set to be 80, then the conditional logit of being admitted overnight is:
+\begin{equation}
+    log\left(\frac{p}{(1-p)}\right)(Age =80) = -5.0746 +0.0681*80 
+\end{equation}
+Then the effect of a one-unit increase in age can be examined. When the age of a patient is 81,
+\begin{equation}
+    log\left(\frac{p}{(1-p)}\right)(Age = 71) = -5.0746 +0.0681*81 
+\end{equation}
+Taking the difference of the two equations, we are left with the following result:
+\begin{equation}
+log\left(\frac{p}{(1-p)}\right)(Age =81) - log\left(\frac{p}{(1-p)}\right)(Age = 80) = 0.1381
+\end{equation}
+Therefore the coefficient for age is the difference in the log odds, and as such, for one unit increase in age, the expected change in log odds is 0.1381. Exponentiating both sides, results in:
+\begin{equation}
+    e^{log\left(\frac{p}{(1-p)}\right)(Age =81) - log\left(\frac{p}{(1-p)}\right)(Age = 80)} = e^{0.1381}
+\end{equation}
+\begin{equation}
+     e^{0.1381} = 1.1481
+\end{equation}
+Therefore we can say for one-unit increase in age, there is a 14.81\% increase in the odds of being admitted overnight. The 14.81\% of increase is not dependent on the value age is held at.
+%https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+
+%https://quantifyinghealth.com/interpret-logistic-regression-coefficients/#:~:text=Interpret%20Logistic%20Regression%20Coefficients%20%5BFor%20Beginners%5D%201%201.,light%20smoker%2C%202%3A%20moderate%20smoker%2C%203%3A%20heavy%20smoker%29
+
+Similarly, we can calculate the log odds for a categorical variable, e.g., \hl{something}
+
+
+
+\subsection{Classification and Regression Trees}
+The variables analysed within subsections \ref{} can then be inputted into CART models to predict patients LOS within hospitals.
+
+
+\section{Prescriptive Analytics Results}
+
+\section{Linking Paradigms}
+
+\section{Scenario Analysis}
+\section{Generalizability of results}
+
+\section{Summary}
+\end{document}
