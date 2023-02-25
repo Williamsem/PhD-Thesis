@@ -2315,10 +2315,10 @@ The results highlight the importance to plan on a year to year time frame, rathe
 This section has discussed the research aim, `How best can specialties be organised among a network of hospitals to ensure staffing and bed costs are minimised'. The heatmaps produced visualise the number of beds to locate across different specialties in order to minimise costs. The models also determine the number of staff to deploy based on the number of beds. These models work under the assumption of current hospital locations, where a hospital cannot open wards if they do not have the resources for these specialities. The models perform by deploying beds to the cheapest locations first, determining the trade off between different combinations. Traditionally, ABUHB has planned on averages (deterministic solution), using historic data to determine the locality and quantity of these beds. By implementing a two-stage stochastic model, with different levels of demands, provides savings for the NHS from approximately 2\% per day. This saving has the potential to impact patient care by reallocating this money to additional resources, more staff training or improving community care schemes to reduce the pressures on hospitals.
 
 \section{Linking Paradigms}\label{sec:linking}
-One of the four research aims is to determine `how can linking predictive and prescriptive analytics increase the reliability of the models?'. This section aims to link the CART results with deterministic and two-stage stochastic models together to ensure the results are consistent. Two methods will be explored, firstly by using each end node and determining the number of patients of each specialty and hospital using the average LOS from each end node. The second method will take each end node and the specific LOS for each specialty and hospital within the node. These will then be summed together to form the D$_{s,r}$ parameter. These two methods will be run on both the regression and the classification trees, using the Microsoft Excel implementation.
+One of the four research aims is to determine `how can linking predictive and prescriptive analytics increase the reliability of the models?'. This section aims to link the CART results with deterministic and two-stage stochastic models together to ensure the results are consistent. Two methods will be explored, firstly by using each end node and determining the number of patients of each specialty and hospital using the average LOS from each end node. The second method will take each end node and the specific LOS for each specialty and hospital within the node. These will then be summed together to form the D$_{s,r}$ parameter. These two methods will be run on both the regression and the classification trees, using the Microsoft Excel implementation. The results will be compared on a year to year basis, as well as a three year range. Similar to previous experiments, the models will be run with a maximum run time of 100 seconds and a tolerance of 0.01\%. The deterministic and two-stage stochastic models will be used to calculated the VSS. The demands utilised within this section and the resulting heatmaps can be seen within Appendix \ref{app:linkeddemands}.
 
 \subsection{Regression Tree and Average LOS}
-Recall the regression tree generated in Section \ref{sec:regressiontrees}, Figure \ref{fig:finalregtree}. This tree generated 30 leaf nodes, and therefore 30 patient groupings. For each node, the demand can be calculated using the Average LOS determined by the node. Using Equation \eqref{eq:treedemand1}, the average demand can be calculated:
+The first method utilises the regression tree generated in Section \ref{sec:regressiontrees}, Figure \ref{fig:finalregtree}. This tree generated 30 leaf nodes, and therefore 30 patient groupings. For each node, the demand can be calculated using the Average LOS determined by the node. Using Equation \eqref{eq:treedemand1}, the average demand can be calculated:
 
 \begin{equation}\label{eq:treedemand1}
         D_{s,r} = \sum\limits_{h \in r} D_{s,h} = \frac{\text{Number of Patients}_{s,h}*\text{Node Average LOS}}{1096}
@@ -2339,7 +2339,7 @@ Table \ref{tab:Node2Regression} displays the process of determining the average 
     \item Specialty = Care Of The Elderly
 \end{enumerate}
 
-The final column of Table \ref{tab:Node2Regression} refers to the average daily bed demand across three years worth of data. Each nodes demands are consolidated for each specialty and hospital and the used for the overall demand, as shown in Table \ref{tab:LinkedDemands1}
+For this end node, there are three hospitals included, all of which are the COTE specialty accounting for 8776 patients. The final column of Table \ref{tab:Node2Regression} refers to the average daily bed demand across three years worth of data. Each nodes demands are consolidated for each specialty and hospital and the used for the overall demand, can be seen within Table \ref{apptab:LinkedDemands1}.
 \begin{table}[h!]
     \centering\scalebox{0.8}{
     \begin{tabular}{ccccc}\toprule 
@@ -2353,70 +2353,122 @@ The final column of Table \ref{tab:Node2Regression} refers to the average daily 
 \end{table}
 
 
-\begin{table}[h!]
-    \centering\scalebox{0.8}{
-    \begin{tabular}{lccccccc}\toprule
-\textbf{Specialty}& 	\textbf{Region 1}& 	\textbf{Region 2}	& \textbf{Region 3}	& \textbf{Region 4}	& \textbf{Region 5}& 	\textbf{Region 6} \\\midrule
-Accident \& Emergency	& 2.9774& 	0& 	0& 	0& 	8.5806& 	0\\
-Anaesthetics	& 2.6186& 	0& 	0& 	0& 	0.4500& 	0\\
-Cardiology& 	17.4979& 	0& 	0& 	0& 	11.6617& 	0.0004\\
-Care of the Elderly& 	91.4733& 	58.0161& 	0.9609	& 8.6464& 	44.3996	& 0\\
-Community Medicine	& 0& 	7.0858& 	0 & 	0.3525	& 13.1956	& 0 \\
-Dermatology	& 2.9698& 	1.0093& 	0& 	0& 0& 0\\
-Diabetes \& Endocrinology& 	12.6673	& 21.6499	& 0& 	0& 	16.3229& 0\\
-Ear Nose \& Throat	& 4.2248& 	0.0051	& 0& 	0& 	0& 	0\\
-Gastroenterology	& 11.7004& 	1.9326& 	0& 	0& 19.8421& 	0.1022\\
-General Medicine	& 87.7316& 	0.9656& 	0.0217& 	0& 	16.1179& 	0\\
-General Surgery& 	40.9970	& 0.8121	&0& 	0& 	20.7664& 	0.0011\\
-GP Other& 	0& 	7.9065& 	0& 	0& 13.9381& 	0\\
-Gynaecology& 	1.6235& 	0.1061	& 0&  0& 	0.8319& 	0.0004\\
-Haematology& 	3.9436& 	0.0651	& 0&	0&	1.7608	&0.0004\\
-Infectious Diseases&	5.4554	&0&	0&	0&	0&	0\\
-Intermediate Care&	0&	0&0.2191&	0.2345&	0&	0\\
-Maxillo-Facial&	1.2359	&0&	0&	0&	0.0926&	0\\
-Neurology&	2.4671&	0&	0&	0&	0&	0\\
-Ophthalmology&	4.0402	&0.0123&	0&	0&	0.4399&	0.7538\\
-Pain	&0.1110&	0.0110&	0&	0.0151&	0.0452	&0\\
-Plastic Surgery&	0&	0&	0&	0&	0.0483	&0.0004\\
-Radiology	&0.0152&	0&	0&	0&	0.0109&	0\\
-Radiotherapy and Oncology	&0.0128	0&0&	0&0&	0&	0\\
-Rehabilitation	&61.4494&	23.7536&	67.9427	&32.8620&	24.2661&	0\\
-Respiratory	&26.5238	&0&	0&	0&	3.9033&	0\\
-Restorative Dentistry	&0.0007&	0&	0&	0&	0&	0\\
-Rheumatology	& 0.0004	& 0.0491	& 0& 	0&	0.0072&	0\\
-Trauma \& Orthopaedic& 	57.7847	& 0.3512& 	0& 	0	& 39.6777& 	0\\
-Urology	& 15.2014	& 0.1453& 	0& 	0& 	0.5106	& 0.0202\\\bottomrule
-
-    \end{tabular}}
-    \caption{Demands for three years worth of data}
-    \label{tab:LinkedDemands1}
-\end{table}
-
-Table \ref{tab:Results1} presents the results with the demands created in Table \ref{tab:LinkedDemands1}. The same four scenarios, as listed in Table \ref{tab:scenarios1}, were applied to the demand figures. The VSS can be calculated to be 2.81\% with a saving of $\pounds$28,383.54. In comparison to the Table \ref{tab:eiveesveevdettwostageresults1}, there is a difference in deterministic solution of approximately 3.34\%, with the regression tree deploying fewer numbers of beds and nurses. This trend follows with the two-stage stochastic model and the EEV, EESV, and EIV. One reason for this could be due to the regression tree R$^{2}$ score of 34.28\% which is not accounting for longer LOS's. 
+Table \ref{tab:Results1} presents the results with the demands created in Table \ref{tab:LinkedDemands1}. The same four scenarios, as listed in Table \ref{tab:scenarios1}, were applied to the demand figures. The VSS can be calculated to be 2.80\% with a saving of $\pounds$28,922.24. In comparison to the Table \ref{tab:eiveesveevdettwostageresults1}, there is a difference in deterministic solution of approximately 1.51\%, with the regression tree deploying fewer numbers of beds and nurses. In the two-stage stochastic model, the number of beds deployed in the first stage remain the same, although the locations of the beds differ, the other decision variables differ. The differences in the objective function, bed and staff deployment could be due to the regression tree R$^{2}$ score of 34.28\% which is not accounting for longer LOS's. 
 
 \begin{table}[h!]
     \centering
     \begin{tabular}{cccccl}\toprule
  & \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){2-3} \cmidrule(lr){4-5}
  & xbed           & ubed          & xstaff         & ustaff         \\ \midrule
-    Deterministic      & 976 & & 600 & & 977,990 = EV \\ \midrule
-    Stochastic &959& 116& 576 & 87&  1,011,161.60 = RP \\ \midrule
-    Test A & 976 & 96 & 600 & 120 & 1,039,545.14 = EEV \\ \midrule
-    Test B & 959 & 112 & 579 & 87 & 1,011,340.96 = EESV \\\midrule
-    Test C & 1,000 & 71 & 600 & 72& 1,030,724.64 = EIV \\\bottomrule
+    Deterministic      & 1019 & - & 615 & - & 998,157.80 = EV \\ \midrule
+    Stochastic &1003& 119& 591 & 93&  1,034,073.36 = RP \\ \midrule
+    Test A & 1019 & 103 & 615 & 123 & 1,062,995.60 = EEV \\\bottomrule
     \end{tabular}
-    \caption{Deterministic and Two-Stage Stochastic Results - Regression Tree and Average LOS}
+    \caption{Deterministic and Two-Stage Stochastic Results - Regression Tree and Average LOS - Three Years}
     \label{tab:Results1}
 \end{table}
 
-The year to year planning can also be calculated with the regression tree to determine how the model performs on a yearly basis.
+The year to year planning can also be calculated with the regression tree nodes to determine how the model performs on a yearly basis. Table \ref{tab:Results2} displays the EV, RP and EEV values for each year, with the demands given in Table \ref{app:} \hl{Reference}. For the year 2019 - 2020, the total capacity had to be increased for the hospital Ysbyty Aneurin Bevan, meaning additional beds would be required from other age ranges in order to meet the demand. This would suggest the average LOS for the year 2019 - 2020 is too large for this hospital compared to previous years.
+
+Comparing the results to Table \ref{tabeiveesveevdetstocresults2}, suggest the model using the average LOS for the nodes under predict the required demands. The deterministic difference ranges from 0.24\% to 6.52\%, showing the average LOS across all three years may not yield beneficial results. The locations of the bed placements can be seen within Appendix \ref{} \hl{reference}.
 
 
 
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ccccccl}\toprule
+ & \multirow{2}{*}{\textbf{Year}}& \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+&& xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+     \multirow{3}{*}{Deterministic} & 2017 - 2018 & 975  & - & 567  & - &  939,334.04 =  EV$_{17-18}$ \\ 
+      & 2018 - 2019 &1003 & - & 582 & - & 975,890.84 =  EV$_{18-19}$ \\
+      & 2019 - 2020 & 1008 & - & 594 & - &  993,691.28 =  EV$_{19-20}$\\ \midrule
+     \multirow{3}{*}{Stochastic} & 2017 - 2018 & 961 & 120 & 540 & 81 & 973,915.42 =  RP$_{17-18}$ \\ 
+      & 2018 - 2019 & 982 &  118 & 573 & 87 & 1,013,177.66 =  RP$_{18-19}$ \\
+      & 2019 - 2020 &993 & 118 &570 &87 & 1031731.4 =  RP$_{19-20}$\\ \midrule    
+     \multirow{3}{*}{Test A} & 2017 - 2018 & 975 & 101 &  567 & 120 & 1,000,582.82
+=  EEV$_{17-18}$ \\ 
+      & 2018 - 2019& 1003 & 92& 582 & 105 &1,029,686.36 =  EEV$_{18-19}$ \\
+      & 2019 - 2020 & 1008 & 99 & 594 &120 & 1,059,168.92 =  EEV$_{19-20}$\\ \bottomrule       
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Regression Tree and Average LOS - Year Specific}
+    \label{tab:Results2}
+\end{table}
+
+
+The third and final experiment will take the average LOS for each end node and each year. This should mitigate the issues caused in the previous experiment where YAB did not have sufficient capacity within the UB$_{h}^{\textnormal{max, bed}}$ constraint. The results listed in Table \ref{tab:Results3} have objective functions much similar to those in the original experiment. The difference in the deterministic values range from 0.82 to 2.24\%. \hl{add conclusion here after next section to see what that result is...}. 
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ccccccl}\toprule
+ & \multirow{2}{*}{\textbf{Year}}& \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+&& xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+     \multirow{3}{*}{Deterministic} & 2017 - 2018 & 1027   & - &  582 & - & 991,514.84 =  EV$_{17-18}$ \\ 
+      & 2018 - 2019 & 1004 & - &585 &  - &  985,028.20 =  EV$_{18-19}$ \\
+      & 2019 - 2020 & 997 & - & 585 & - &   974,160.20 =  EV$_{19-20}$\\ \midrule
+     \multirow{3}{*}{Stochastic} & 2017 - 2018 & 1001  & 129  & 561 & 87 & 1,025,039.30  =  RP$_{17-18}$ \\ 
+      & 2018 - 2019 & 981 & 122  & 570 & 87 & 1,020,358.10 =  RP$_{18-19}$ \\
+      & 2019 - 2020 & 979 & 117 & 561 & 84 & 1,011,335.52 =  RP$_{19-20}$\\ \midrule    
+     \multirow{3}{*}{Test A} & 2017 - 2018 & 1027  & 97 &  582 & 105 & 1,047,382.34=  EEV$_{17-18}$ \\ 
+      & 2018 - 2019& 1004 & 95 & 585 & 105 &1,040,391.70 =  EEV$_{18-19}$ \\
+      & 2019 - 2020 & 997 & 95 & 585  & 120 & 1,036,865.48 =  EEV$_{19-20}$\\ \bottomrule       
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Regression Tree and Average Year Specific LOS}
+    \label{tab:Results3}
+\end{table}
+
+
+\newpage
 
 
 
 \subsection{Regression Tree and Specific LOS}
+
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ccccccl}\toprule
+ & \multirow{2}{*}{\textbf{Year}}& \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+&& xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+     \multirow{3}{*}{Deterministic} & 2017 - 2018 & 
+ =  EV$_{17-18}$ \\ 
+      & 2018 - 2019 & =  EV$_{18-19}$ \\
+      & 2019 - 2020 &  985 & - & 540 & = 949,538.8 EV$_{19-20}$\\\midrule
+     \multirow{3}{*}{Stochastic} & 2017 - 2018  =  RP$_{17-18}$ \\ 
+      & 2018 - 2019 & =  RP$_{18-19}$ \\
+      & 2019 - 2020 & 961 & 122 &525 &93 & 988,134.40 =  RP$_{19-20}$\\ \midrule
+      \multirow{3}{*}{Test A} & = EEV$_{17-18}$\\
+      & 2018 - 2019 & = EEV$_{18-19}$\\
+      & 2019 - 2020 & 985 & 98 & 960 & 120 = EEV$_{19-20}$\\\midrule
+      \multirow{3}{*}{Test B} & 2017 - 2018= EESV$_{17-18}$\\
+      & 2018 - 2019 & = EESV$_{18-19}$\\
+      & 2019 - 2020 & 961 & 122 &525 &93 & 988,134.40  = EESV$_{19-20}$\\\midrule
+       \multirow{3}{*}{Test C}& 2017 - 2018 = EIV$_{17-18}$\\
+      & 2018 - 2019 = EIV$_{18-19}$\\
+      & 2019 - 2020 & 1004 & 79& 540 & 81& 1,005,846.68 = EIV$_{19-20}$\\\bottomrule      
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Regression Tree and Specific LOS }
+    \label{tab:ResultsX}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
 \subsection{Classification Tree and Average LOS}
 \subsection{Classification Tree and Specific LOS}
 \section{Scenario Analysis}
