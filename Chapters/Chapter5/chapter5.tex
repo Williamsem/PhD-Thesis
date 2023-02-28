@@ -2372,7 +2372,7 @@ The year to year planning can also be calculated with the regression tree nodes 
 \begin{equation}\label{eq:treedemand2}
         D_{s,r,year} = \sum\limits_{h \in r} D_{s,h,year} = \frac{\text{Number of Patients}_{s,h}* {\text{Node Average LOS}}_{year}}{\text{Number of Days in Year}}
 \end{equation}
-Table \ref{tab:Results2} displays the EV, RP and EEV values for each year, with the demands given in Table \ref{app:} \hl{Reference}. For the year 2019 - 2020, the total capacity had to be increased for the hospital Ysbyty Aneurin Bevan, meaning additional beds would be required from other age ranges in order to meet the demand. This would suggest the average LOS for the year 2019 - 2020 is too large for this hospital compared to previous years.
+Table \ref{tab:Results2} displays the EV, RP and EEV values for each year, with the demands given in Tables \ref{apptab:LinkedDemands2a} and \ref{apptab:LinkedDemands2b}. For the year 2019 - 2020, the total capacity had to be increased for the hospital Ysbyty Aneurin Bevan, meaning additional beds would be required from other age ranges in order to meet the demand. This would suggest the average LOS for the year 2019 - 2020 is too large for this hospital compared to previous years.
 
 Comparing the results to Table \ref{tabeiveesveevdetstocresults2}, suggest the model using the average LOS for the nodes under predict the required demands. The deterministic difference ranges from 0.24\% to 6.52\%, showing the average LOS across all three years may not yield beneficial results. The locations of the bed placements can be seen within Appendix \ref{} \hl{reference}.
 
@@ -2400,7 +2400,7 @@ Comparing the results to Table \ref{tabeiveesveevdetstocresults2}, suggest the m
 
 
 
-The third and final experiment will take the specific LOS for each end node and specialty, hospital and year combination. This should mitigate the issues caused in the previous experiment where YAB did not have sufficient capacity within the UB$_{h}^{\textnormal{max, bed}}$ constraint. Equation \eqref{eq:treedemand3} displays the formulation of the demands.
+The third and final experiment will take the specific LOS for each end node and specialty, hospital and year combination. This should mitigate the issues caused in the previous experiment where YAB did not have sufficient capacity within the UB$_{h}^{\textnormal{max, bed}}$ constraint. Equation \eqref{eq:treedemand3} displays the formulation of the demands, with the overall demands listed in Tables \ref{apptab:LinkedDemands3a} and \ref{apptab:LinkedDemands3b}.
 \begin{equation}\label{eq:treedemand3}
         D_{s,r,year} = \sum\limits_{h \in r} D_{s,h,year} = \frac{\text{Number of Patients}_{s,h}*\text{Node Average LOS}_{s,h,year}}{\text{Number of Days in Year}}
 \end{equation}
@@ -2436,7 +2436,7 @@ The second method also utilises the regression tree shown in Figure \ref{fig:fin
         D_{s,r} = \sum\limits_{h \in r} D_{s,h} = \frac{\text{Number of Patients}_{s,h}*{\text{Specific LOS}_{s,h}}}{1096}
 \end{equation}
 
-Table \ref{tab:Node2Regressionb} presents the second node within the regression tree and determines how each of the demands are generated within this node. These results in comparison with Table \ref{tab:Node2Regression}, have shown that using specific hospital and specialty LOS increase the demand by one bed overall in RGH. The generated demands can be viewed in Table \ref{} \hl{Reference here}.
+Table \ref{tab:Node2Regressionb} presents the second node within the regression tree and determines how each of the demands are generated within this node. These results in comparison with Table \ref{tab:Node2Regression}, have shown that using specific hospital and specialty LOS increase the demand by one bed overall in RGH. The generated demands can be viewed in Table \ref{apptab:LinkedDemands4}.
 
 \begin{table}[h!]
     \centering\scalebox{0.8}{
@@ -2450,7 +2450,7 @@ Table \ref{tab:Node2Regressionb} presents the second node within the regression 
     \label{tab:Node2Regressionb}
 \end{table}
 
-Table \ref{Results4} presents the results for the deterministic and two-stage stochastic model, with tests the EEV also being calculated to determine the VSS.
+Table \ref{tab:Results4} presents the results for the deterministic and two-stage stochastic model, with tests the EEV also being calculated to determine the VSS.
 
 \begin{table}[h!]
     \centering
@@ -2467,7 +2467,7 @@ Table \ref{Results4} presents the results for the deterministic and two-stage st
 
 Comparing to the regression tree with average LOS results, the deterministic and two-stage stochastic objective value's were lower in the specific LOS model. This suggests that rather than using node averages, if the specific LOS is used, more cost savings can be generated. The VSS produced a saving of $\pounds$21,130.50 per day (2.08\%). 
 
-These results can be analysed on a year to year basis with the specific LOS produced from each regression tree node (Table \ref{} \hl{reference Appendix here :)}. To calculate the demands for each specialty and region for each year Equation \eqref{eq:treedemand5} can be applied.
+These results can be analysed on a year to year basis with the specific LOS produced from each regression tree node (Tables \ref{apptab:LinkedDemands5a} and \ref{apptab:LinkedDemands5b}). To calculate the demands for each specialty and region for each year Equation \eqref{eq:treedemand5} can be applied.
 
 
 \begin{equation}\label{eq:treedemand5}
@@ -2531,7 +2531,7 @@ Consider node nine on the CART tree where a patient falls into this category if 
     \item Specialty = Respiratory
 \end{enumerate}
 
-For this node, the majority of patients fall into the `$<$1' category, and the average LOS is less than one (0.913918 days). This value can then be used to calculate the average daily demand required for each specialty and hospital within this node (Table \ref{tab:classnodeexample}). The associated demands are presented in Table \ref{apptab:LinkedDemands6},\hl{check this is right?} within the Appendix.
+For this node, the majority of patients fall into the `$<$1' category, and the average LOS is less than one (0.913918 days). This value can then be used to calculate the average daily demand required for each specialty and hospital within this node (Table \ref{tab:classnodeexample}). The associated demands are presented in Table \ref{apptab:LinkedDemands6}, within the Appendix.
 
 \begin{table}[h!]
     \centering
@@ -2560,16 +2560,16 @@ Table \ref{tab:Results6} presents the results utilising these demands, generatin
     \label{tab:Results6}
 \end{table}
 
-The VSS was calculated to be 2.14\%, showing that with classification trees generating the demand, savings can still be made using this method.
+The VSS was calculated to be 2.14\%, showing that with classification trees generating the demand, savings can still be made using this method. \hl{Add something here}
 
-Further analysing on a year to year case, Equation \eqref{eq:treedemand2} determines how each of the demands are calculated.
+Further analysing on a year to year case, Equation \eqref{eq:treedemand2} determines how each of the demands are calculated. Once summed across each node, the formulated demand can be inputted into the deterministic and two-stage stochastic models (Tables \ref{apptab:LinkedDemands7a} and \ref{apptab:LinkedDemands7b}).
 
 \begin{equation}
         D_{s,r,year} = \sum\limits_{h \in r} D_{s,h,year} = \frac{\text{Number of Patients}_{s,h}* {\text{Node Average LOS}}_{year}}{\text{Number of Days in Year}} \tag{\ref{eq:treedemand2} revisited}
 \end{equation}
 
 Table \ref{tab:Results7} displays the EV, RP and EEV results, showing year to year the EV objective value ...
-
+\hl{add more here - talk about results}
 \begin{table}[h!]
     \centering
     \begin{tabular}{ccccccl}\toprule
@@ -2585,7 +2585,7 @@ Table \ref{tab:Results7} displays the EV, RP and EEV results, showing year to ye
      \multirow{3}{*}{Test A} & 2017 - 2018 & 1031 & 100 & 618  &105  & 991,925.70=  EEV$_{17-18}$ \\ 
       & 2018 - 2019& 1030 & 99 &  624& 114 & 997,552.42
 =  EEV$_{18-19}$ \\
-      & 2019 - 2020 & 1023 & 93  & 624 &102 &  988306.28
+      & 2019 - 2020 & 1023 & 93  & 624 &102 &  988,306.28
 =  EEV$_{19-20}$\\ \bottomrule       
     \end{tabular}
     \caption{Deterministic and Two-Stage Stochastic Results - Classification Tree and Average LOS - Year Specific LOS}
@@ -2594,62 +2594,161 @@ Table \ref{tab:Results7} displays the EV, RP and EEV results, showing year to ye
 
 
 
-These results can be extended to include the average LOS per year, rather than using the node average for the model. This utilises Equation \eqref{eq:treedemand3} to calculate the demands shown in Table \ref{} \hl{Reference}.
+These results can be extended to include the average LOS per year, rather than using the node average for the model. This utilises Equation \eqref{eq:treedemand3} to calculate the demands shown in Tables \ref{apptab:LinkedDemands8a} and \ref{apptab:LinkedDemands8b}.
 
 \begin{equation}
         D_{s,r,year} = \sum\limits_{h \in r} D_{s,h,year} = \frac{\text{Number of Patients}_{s,h}*\text{Node Average LOS}_{s,h,year}}{\text{Number of Days in Year}} \tag{\ref{eq:treedemand3} revisited}
 \end{equation}
 
 The results can be seen within Table \ref{tab:Results8}, and visualised within Figures \ref{} \hl{reference} in the Appendix.
-\hl{TODO Tomorrow: redo the 2019-2020 :( }
+\hl{add more waffle here }
 \begin{table}[h!]
     \centering
     \begin{tabular}{ccccccl}\toprule
  & \multirow{2}{*}{\textbf{Year}}& \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){3-4} \cmidrule(lr){5-6}
 && xbed           & ubed          & xstaff         & ustaff         \\ \midrule
      \multirow{3}{*}{Deterministic} & 2017 - 2018 & 1031  & - & 618  & - & 937,118.16 =  EV$_{17-18}$ \\ 
-      & 2018 - 2019 & 1017& - & 624 & - &  933263.88 =  EV$_{18-19}$ \\
-      & 2019 - 2020 & 1006  & - & 612 & - &  922826.44 =  EV$_{19-20}$\\ \midrule
-     \multirow{3}{*}{Stochastic} & 2017 - 2018 & 1002 & 134 &591  & 99 &  969,918.66 =  RP$_{17-18}$ \\ 
-      & 2018 - 2019 &  993 & 117  & 609  &  93& 968973.22 =  RP$_{18-19}$ \\
-      & 2019 - 2020 & &  & & &  =  RP$_{19-20}$\\ \midrule    
-     \multirow{3}{*}{Test A} & 2017 - 2018 & 1031 & 100 & 618  &105  & 991,925.70=  EEV$_{17-18}$ \\ 
-      & 2018 - 2019& 1017 &93 & 614  & 111 & 986890.08=  EEV$_{18-19}$ \\
-      & 2019 - 2020 &  &  &  & &  =  EEV$_{19-20}$\\ \bottomrule       
+      & 2018 - 2019 & 1017& - & 624 & - &  933,263.88 =  EV$_{18-19}$ \\
+      & 2019 - 2020 & 1006  & - & 612 & - &  922,826.44 =  EV$_{19-20}$\\ \midrule
+     \multirow{3}{*}{Stochastic} & 2017 - 2018 & 1002 & 134 &591  & 99 &  969,918.66 = RP$_{17-18}$ \\ 
+      & 2018 - 2019 &  993 & 117  & 609  &  93& 968,973.22 =  RP$_{18-19}$ \\
+      & 2019 - 2020 & 978 & 125 & 594 & 90& 958,670.90 =  RP$_{19-20}$\\ \midrule    
+     \multirow{3}{*}{Test A} & 2017 - 2018 & 1031 & 100 & 618  &105  & 991,925.70 = EEV$_{17-18}$ \\ 
+      & 2018 - 2019& 1017 &93 & 614  & 111 & 986,890.08=  EEV$_{18-19}$ \\
+      & 2019 - 2020 & 1006 & 91 &612  &99 & 975,063.58 = EEV$_{19-20}$\\ \bottomrule       
     \end{tabular}
-    \caption{Deterministic and Two-Stage Stochastic Results - Classification Tree and Average LOS - Year Specific LOS}
+    \caption{Deterministic and Two-Stage Stochastic Results - Regression Tree and Average LOS - Year Specific LOS}
     \label{tab:Results8}
 \end{table}
 
 
+\hl{Summarise bit here - should probably have a summary at the end of each subsection?!}
+
+
+\subsection{Classification Tree and Specific LOS}
+
+
+The fourth and final method also utilises the classification tree shown in Figure \ref{fig:finalclasstree}. Instead of using average LOS for each of the 30 end nodes, the LOS will be determined for each hospital and specialty within that node. Equation \eqref{eq:treedemand4} displays how each of the demands are generated.
+
+\begin{equation}
+        D_{s,r} = \sum\limits_{h \in r} D_{s,h} = \frac{\text{Number of Patients}_{s,h}*{\text{Specific LOS}_{s,h}}}{1096} \tag{\ref{eq:treedemand4} revisited}
+\end{equation}
+
+Table \ref{tab:Node2Regressiond} presents the second node within the regression tree and determines how each of the demands are generated within this node. These results in comparison with Table \ref{tab:classnodeexample}, have shown that using specific hospital and specialty LOS overall do not increase the number beds required in this node. The generated demands can be viewed in Table \ref{apptab:LinkedDemands9}. Across all nodes, the number of beds required reduce from 1,027 beds to  1,021 beds in the deterministic stage (Table \ref{tab:Results9}). 
+
+\begin{table}[h!]
+    \centering\scalebox{0.8}{
+    \begin{tabular}{ccccc}\toprule 
+    \textbf{Hospital} & \textbf{Specialty} & \textbf{Count}& \textbf{Average LOS} & \textbf{Average Daily Demand}\\\midrule
+    Nevill Hall Hospital &  Respiratory &     690 &0.531884 & 0.3348540 \\
+    Royal Gwent Hospital &  Respiratory &     553 & 1.39057& 0.7016423 \\ \bottomrule
+    \end{tabular}}
+    \caption{Classification Tree Node 2 - Specific LOS}
+    \label{tab:Node2Regressiond}
+\end{table}
+
+Table \ref{Results9} presents the results for the deterministic and two-stage stochastic model, with the EEV also being calculated to determine the VSS.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cccccl}\toprule
+ & \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+ & xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+    Deterministic      & 1021 & - & 588 & - & 1,000,653.56 = EV \\ \midrule
+    Stochastic &993& 129& 573 & 90& 1,032,779.62= RP \\ \midrule
+    Test A & 1021 & 97 & 588 & 105 & 1,055,076.86 = EEV \\\bottomrule
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Classification Tree and Specific LOS - Three Years}
+    \label{tab:Results9}
+\end{table}
+
+Comparing to the regression tree with average LOS results, the deterministic and two-stage stochastic objective value's were higher in the specific LOS model. This suggests that rather than using node averages, might not produce sufficient capacity for beds and staff. The VSS produced a saving of $\pounds$22,297.24 per day (2.16\%). 
+
+These results can be analysed on a year to year basis with the specific LOS produced from each regression tree node (Tables \ref{apptab:LinkedDemands10a} and \ref{apptab:LinkedDemands10b}). To calculate the demands for each specialty and region for each year Equation \eqref{eq:treedemand5} can be applied.
+
+
+\begin{equation}
+        D_{s,r,year} = \sum\limits_{h \in r} D_{s,h,year} = \frac{\text{Number of Patients}_{s,h}*{\text{Specific LOS}_{s,h,year}}}{{\text{Number of Days in Year}}} \tag{\ref{eq:treedemand5} revisited}
+\end{equation}
+
+Table \ref{tab:Results5} presents the results tool has optimised the bed and staffing numbers based on the demand values. \hl{ADD something here?} 
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ccccccl}\toprule
+ & \multirow{2}{*}{\textbf{Year}}& \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+&& xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+     \multirow{3}{*}{Deterministic} & 2017 - 2018 & 1019 & - & 561 & - & 980,327.32 = EV$_{17-18}$ \\ 
+      & 2018 - 2019 &1010 & - &561 & - & 981,023.32 = EV$_{18-19}$ \\
+      & 2019 - 2020 & 997 & - & 552 & - &  973,479.24 = EV$_{19-20}$\\\midrule
+     \multirow{3}{*}{Stochastic} & 2017 - 2018 &1002 & 109 & 543 & 90 & 1,019,992.12 = RP$_{17-18}$ \\ 
+      & 2018 - 2019 &977 & 129 &540 & 96& 1,011,289.90 = RP$_{18-19}$ \\
+      & 2019 - 2020 & 970 & 130 & 573 &99 & 1,012,269.58 = RP$_{19-20}$\\ \midrule
+      \multirow{3}{*}{Test A}& 2017 - 2018 &1019& 105&561&105&1,008,706.66 = EEV$_{17-18}$\\
+      & 2018 - 2019 &1002& 92 & 543 & 105& 1,034,227.54 = EEV$_{18-19}$\\
+      & 2019 - 2020 & 997 & 99 & 552 &120 &  1,033,932.78 = EEV$_{19-20}$\\\bottomrule      
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Classification Tree and Specific LOS - Year Specific}
+    \label{tab:Results5}
+\end{table}
 
 
 
-
-
-
-
-
-
-
+\hl{TODO:}
+\begin{itemize}
+    \item \hl{Double check the last two are correct order}
+    \item \hl{Add in Figures}
+    \item \hl{Reference figures within text}
+    \item \hl{Talk about classification trees and zero bed mean issue caused on average LOS? - double check this tomorrow?}
+    \item \hl{Summary Sections}
+    \item \hl{Talk about specific results}
+\end{itemize}
 
 
 \newpage
-\subsection{Classification Tree and Specific LOS}
-\section{Scenario Analysis}
 
-\subsection{M- Penalty}
-\begin{itemize}
-    \item Soft constraints that if demand is not met, then do not need to open ward but there is an additional cost
-\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Scenario Analysis}
+This sections looks at analysing specific scenarios in ABUHB as identified through collaboration with partners within the healthboard. The healthboard has three main concerns regarding changes within the future to the healthboard and how this may impact bed and staffing requirements, if no changes are made.
+
+\hl{See if i can find data on how many beds are currently open in each ward - and see when demand is not met. - I have this in an Excel File somewhere}
+
+\begin{enumerate}
+    \item Addition of new hospital
+    \item What if demand cannot be met - interactions between other areas 
+    \item long term forecasting predictions
+\end{enumerate}
+\subsection{Adding in Grange}
+The final scenario investigates the effect on current services if a new hospital is added into the region. Within ABUHB a specialist critical care centre known as The Grange University Hospital, was opened in 2022, (\hl{check}), with the aim to centralise existing services within the healthboard. Therefore
+
+\hl{think I can merge these two together?}
 \subsection{Flexibility in moving patients to different regions}
 \begin{itemize}
     \item How would services work if there was an overlap, with a Preference matrix to allow movement between services - maybe? 
 \end{itemize}
-
-\subsection{Adding in Grange}
-The final scenario investigates the effect on current services if a new hospital is added into the region. Within ABUHB a specialist critical care centre known as The Grange University Hospital, was opened in 2022, (\hl{check}), with the aim to centralise existing services within the healthboard. Therefore 
+\subsection{M- Penalty}
+\begin{itemize}
+    \item Soft constraints that if demand is not met, then do not need to open ward but there is an additional cost
+\end{itemize}
 \subsection{Long term predictions}
+\subsubsection{Re-evaluating the current setup}
+
+
 
 
 \section{Generalizability of results}
