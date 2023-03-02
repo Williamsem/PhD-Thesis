@@ -414,7 +414,7 @@ This sections looks at analysing specific scenarios in ABUHB as identified throu
 \end{enumerate}
 
 
-\subsection{Addition of a new hospital}
+\subsection{Addition of a new hospital}\label{sec:scenario1}
 In November 2020, a new specialist critical care hospital, known as the Grange University Hospital (GUH), opened within the healthboard with the aim of treating the most seriously ill patients and is the designated trauma centre for the area \cite{NHSWalesa}. The hospital opened with 560 beds and features a 24 hours acute assessment unit, A\&E unit and provides 24/7 emergency care for patients that need specialist and critical care. GUH opened ahead of schedule to help the relieve the pressures caused by the second wave of Covid-19 and winter seasonal pressures. The hospital is designed to treat patients who cannot be safely managed at one of the local general hospitals, and as such required specialties to be relocated throughout the healthboard. As of 2022, GUH caters for 17 specialties and as as result the number of specialties offered by other hospitals reduced. In total, the number of specialties locations offered by the hospitals reduced from 98 to 68. An updated specialty and hospital locations can be seen within Figure \ref{fig:relocation}. One main change is caused by the `Other' category, with five of the services being relocated within one of the healthboards main hospitals.
 
 
@@ -436,31 +436,151 @@ In order to incorporate GUH into the model with the existing data, the assumptio
     \sum_{h\in\mathcal{H}} x^\textnormal{bed}_{s,h} +  \sum_{h\in\mathcal{H}} u^\textnormal{bed}_{s,h,k} \geq D_{s,k} \hspace{0.5cm} \forall s \in \mathcal{S}, k \in \mathcal{K}\\
 \end{equation}
 
-To encourage patients to be admitted to the hospital within a region they reside, a preference matrix can be introduced in which the hospital is penalised if patients attend a hospital not in the
+%If demand is not met, then in the second stage of the model, a preference matrix ($P_{r,h}$) is introduced to encourage new additional beds to be opened in the same region where the demand is coming from. This preference matrix can then provide a financial penalty if the patients are forced to attend a hospital not in the local region. This additional cost could be from ambulances transferring patients \cite{Axon2015} or ...
+%This results in the objective function changing to accommodate this change (Equation \eqref{eq:sto_objectiveupdate}). By adding this parameter as a two-dimensional matrix, it provides the user with the option of increasing the costs for regions further away. Conversely, it also provides the option to have a matrix of ones, where there is no effect on the overall objective function value and there is no penalty. \\
+% \underline{Two-Stage Stochastic Model}
+% \begin{multline}\label{eq:sto_objectiveupdate}
+%     \min \sum_{h\in\mathcal{H}}\sum_{s\in\mathcal{S}}(x^\textnormal{bed}_{s,h}c^\textnormal{bed, 1st}_{s,h} + \sum_{b\in\mathcal{B}}x^\textnormal{staff}_{s,b,h}c^\textnormal{staff, 1st}_{b}) +\\ 
+%     \sum_{k\in\mathcal{K}}\sum_{h\in\mathcal{H}}\sum_{s\in\mathcal{S}}p_{k}(\sum_{r\in\mathcal{R}} P_{r,h} u^\textnormal{bed}_{s,h,k}c^\textnormal{bed, 2nd}_{s,h} +
+%    \sum_{b\in\mathcal{B}} u^\textnormal{staff}_{s,b,k,h}c^\textnormal{staff, 2nd}_{b})
+% \end{multline}
 
-As the regression tree nodes resulted in similar results to the OpenSolver averages, this method will be used to generate the demands moving forward. 
+The cost for each specialty bed was derived from Publish Health Scotland open source data. The specialty average of the Welsh created data was equal to the specialty average for the Scottish data, with the Welsh data also falling within given range of the Scottish data. Since the values were created on the previous hospital/specialty location possibilities, without GUH being included, new values are required to be generated in order to meet the average of the Scottish data. If a speciality remains in the same hospital, the previous cost will remain the same. However, in some cases, the number of specialties offered by hospitals have reduced and therefore do not meet the Scottish average. Therefore, these values are increased or decreased to meet the average. The final values for $c^\textnormal{bed,1st}_{s,h}$ and $c^\textnormal{bed,2nd}_{s,h}$ can be seen within Table \ref{}. Similarly, since the opening of GUH, the number of available beds within existing hospitals have decreased. GUH has an available X beds within the hospital available to all patients, but has been scaled to Y to account for the age group. This therefore effects the K$_{s,h}$, UB$^\textnormal{max, bed, 1st}_{h}$ and UB$^\textnormal{max, bed, 2nd}_{h}$ variables as the number of available beds have reduced. Again this can be seen within Table \ref{} \hl{REFERENCE TABLE HERE}.
 
-The specific nodes can have values increased or decreased as to what potential future scenarios are likely to involve, rather than simply increasing or decreasing the overall demand. 
+%To encourage patients to be admitted to the hospital within a region they reside, a preference matrix can be introduced. The hospital is penalised if patients attend a hospital not in the local region.
+
+As the regression tree nodes \hl{resulted} in similar results to the OpenSolver averages, this method will be used to generate the demands moving forward. By linking the predictive and prescriptive paradigms, the scenario analysis can utilise more specific scenarios by varying the demand through nodes individually. This is more realistic than the current practice of increasing and decreasing the demands by a fixed percentage. The data will be used over a the entire three years worth of data. Even though more savings can be made if planned on a smaller scale, i.e., yearly, it is impractical to for the healthboard to make such changes on a regular scale.
+
+Firstly executing the model with the four scenarios as described previously results in a deterministic value of $\pounds$746,743.68 with 981 beds and 489 staff being deployed (Table \ref{tab:Scenario1Results}). This value increases to $\pounds$762,058.20 for the two stage stochastic model. These results show that by opening GUH and restructuring the specialties within hospitals produces savings of $\pounds$21,527.04. This shows the benefit to decision makers of opening this hospital, and the savings they can potentially make by using the two-stage stochastic model (2.82\%).
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cccccl}\toprule
+ & \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+         
+ & xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+ Deterministic & 981 & - & 489 & - & $\pounds$746,743.68 = EV \\
+ Stochastic & 939 & 152 & 465 & 78 & $\pounds$762,058.20 = RP \\
+ Test A & 981 & 94 & 489 & 69 & $\pounds$783,585.24 = EEV \\\bottomrule
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Scenario 1}
+    \label{tab:Scenario1Results}
+\end{table}
+
+%The models presented will also be more generalised to the healthboard
+
+%Using Table \ref{} \hl{Reference} from within the Appendix
+% The specific nodes can have values increased or decreased as to what potential future scenarios are likely to involve, rather than simply increasing or decreasing the overall demand. 
 
 
 
 
-\subsection{Adding in Grange}
+%\subsection{Adding in Grange}
 % The final scenario investigates the effect on current services if a new hospital is added into the region. Within ABUHB a specialist critical care centre known as The Grange University Hospital, was opened in 2022, (\hl{check}), with the aim to centralise existing services within the healthboard. Therefore
 
 \hl{think I can merge these two together?}
-\subsection{Flexibility in moving patients to different regions}
+%\subsection{Flexibility in moving patients to different regions}
 \begin{itemize}
     \item How would services work if there was an overlap, with a Preference matrix to allow movement between services - maybe? 
 \end{itemize}
 \subsection{M- Penalty}
+The models so far have only considered hard constraints. Hard constraints are where constraints must be satisfied by any feasible solution to produce an optimal solution. However, in reality, if there is not sufficient capacity, patients can not be admitted into hospitals and either treated at home, or transferred to a neighbouring healthboard for treatment. This would then result in an additional cost. This can be incorporated into the existing constraints by the addition of the decision variable $z$. In order to account for this within the objective function, a cost term of $M$ is added, where $M$ is a fixed cost regardless of hospital or specialty. If this was to made more specific to the specialty or hospital, the subscripts $_{s,h}$ could be added and a two-dimensional variable generated. This results in the following formulation for the objective value function and first constraint.
+
+\underline{Deterministic Model}
+\begin{equation}\label{eq:det_objective}
+    \min \sum_{h\in\mathcal{H}}\sum_{s\in\mathcal{S}}(x^\textnormal{bed}_{s,h}c^\textnormal{bed}_{s,h} + \sum_{b\in\mathcal{B}}x^\textnormal{staff}_{s,b,h}c^\textnormal{staff}_{b}) + Mz
+\end{equation}
+\begin{equation}
+    \sum_{h\in\mathcal{H}} x^\textnormal{bed}_{s,h}\geq D_{s} + z \hspace{0.5cm} \forall  s \in \mathcal{S}
+\end{equation}
+\underline{Two-Stage Stochastic Model}
+
+\begin{multline}\label{eq:sto_objectiveupdate}
+    \min \sum_{h\in\mathcal{H}}\sum_{s\in\mathcal{S}}(x^\textnormal{bed}_{s,h}c^\textnormal{bed, 1st}_{s,h} + \sum_{b\in\mathcal{B}}x^\textnormal{staff}_{s,b,h}c^\textnormal{staff, 1st}_{b}) +\\ 
+    \sum_{k\in\mathcal{K}}\sum_{h\in\mathcal{H}}\sum_{s\in\mathcal{S}}p_{k}(\sum_{r\in\mathcal{R}} P_{r,h} u^\textnormal{bed}_{s,h,k}c^\textnormal{bed, 2nd}_{s,h} +
+   \sum_{b\in\mathcal{B}} u^\textnormal{staff}_{s,b,k,h}c^\textnormal{staff, 2nd}_{b}) + Mz
+\end{multline}
+
+\begin{equation}
+    \sum_{h\in\mathcal{H}} x^\textnormal{bed}_{s,h} +  \sum_{h\in\mathcal{H}} u^\textnormal{bed}_{s,h,k} \geq D_{s,k} \hspace{0.5cm} \forall s \in \mathcal{S}, k \in \mathcal{K}\\
+\end{equation}
+
+These new objective functions and constraints can be inputted into the OpenSolver model and solved with the regression tree nodes as demands. Since hard constraints have been used previously, the model will produce the same results as those in Section \ref{{sec:scenario1}} and the objective function values shown in Table \ref{tab:Scenario1Results}. However, if hospital beds are reallocated to other patient age groups within the hospital, or decision makers want to either close hospitals as happened in \hl{YEAR} \hl{REFERENCE}, or close specialties within certain hospitals \hl{Reference maybe?}, it will provide testing to determine how this will impact overall costs and resource requirement.
+
+
+
+
+
 \begin{itemize}
     \item Soft constraints that if demand is not met, then do not need to open ward but there is an additional cost
 \end{itemize}
 \subsection{Long term predictions}
-\subsubsection{Re-evaluating the current setup}
+Long term planning decisions are important within healthcare to determine how demand will vary or change within the future. There are four main reasons as to why long term planning is essential:
+\begin{enumerate}
+    \item Anticipation of future needs: Long term planning helps healthcare organisations to anticipate future needs and plan accordingly. If an area is facing an ageing population, then healthcare providers can plan to expand specific services that are tailored to the needs to the elderly, e.g. COTE.
+    \item Financial stability: The NHS has a limited spending budget per year assigned by the Government. By planning for future demand and capacity, decision makers can ensure they have the resources needed, without overspending and continuing to provide quality care.
+    \item Improved patient outcomes: Long term planning cam allow healthcare organisations to focus on preventative measures and early intervention. By anticipating future healthcare needs, organisations can develop strategies to address them proactively, leading to better health outcomes for patients.
+    \item Resource allocation: Long term planning allows healthcare organisations to allocate resources effectively. With this planning, decision makers can make informed decisions about where to invest resources, such as building new healthcare facilities, hiring additional staff or purchasing new equipment.
+\end{enumerate}
 
+There are three main causes for why the demand will change in the future. Firstly, as Wales has an ageing population, 
 
+\begin{itemize}
+    \item staff low levels
+    \item extreme covid demand - pandemic prepardness
+\end{itemize}
+
+\begin{itemize}
+    \item population demands from the ONS
+    \item Virtual wards
+    \item 
+\end{itemize}
+\hl{reference this: https://www.nhsconfed.org/articles/virtual-care-reducing-hospital-admissions}
+\subsection{Re-evaluating the Current Setup}
+This section aims to re-evaluate the current setup of specialties bed locations in the healthboard and determine if decision makers were to reorganise specialties, what is the most efficient way to do this. This works under the assumptions that a patient can be admitted into any hospital within the healthboard and all hospitals have the potential to locate any specialty. Since the opening of GUH in 2020, specialties since have been relocated around the healthboard. This work will determine if there have been sufficient beds planned and the required staff members to meet the current demand.
+
+The models will work under the assumption that patients can be admitted into any hospital within the area (Section \ref{}) and if demand is not met across the healthboard, then there is a penalty (Section \ref{}).
+
+Previously, specialty bed costs from Public Health Scotland have been utilised for the models (Table \ref{tab:PHSCostsPerSpecialty2}). These variables will be extended
+Recall Table \ref{tab:PHSCostsPerSpecialty2} which contains the range of costs from Public Health Scotland for specialties within the healthboard. As this scenario allows all hospitals to have all specialties, the cost matrix for first and seconds beds requires modifying to incorporate this. The costings used previously, will be recalculated with the new value for each hospital and specialty falling between the given ranges. The average for all specialties will be equal to the average given in Table \ref{tab:PHSCostsPerSpecialty2}.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lccc}\toprule
+        \textbf{Specialty} & \textbf{Minimum Cost} & \textbf{Weighted Average} & \textbf{Maximum Cost} \\\midrule
+        Accident \& Emergency & $\pounds$22 &$\pounds$247 &$\pounds$924 \\
+        Anaesthetics & $\pounds$34 & $\pounds$1,021 & $\pounds$2,370\\
+        Cardiology & $\pounds$4 & $\pounds$614 & $\pounds$1,513 \\
+        Care of the Elderly & $\pounds$131 & $\pounds$577 & $\pounds$6,021 \\
+        Community Medicine & $\pounds$34 & $\pounds$1021 & $\pounds$2,370\\
+        Dermatology & $\pounds$203 & $\pounds$1,381 &$\pounds$2,446 \\
+        Diabetes \& Endocrinology & $\pounds$34 & $\pounds$1,021 & $\pounds$2,370\\
+        Ear, Nose \& Throat & $\pounds$77 & $\pounds$491 & $\pounds$1,436 \\
+        Gastroenterology & $\pounds$112 & $\pounds$656 & $\pounds$1,472 \\
+        General Medicine & $\pounds$2 & $\pounds$290 & $\pounds$1,418\\
+        General Surgery & $\pounds$11 & $\pounds$541 & $\pounds$1,517\\
+        GP Other & $\pounds$6& $\pounds$325 & $\pounds$1,117\\
+        Gynaecology & $\pounds$180 & $\pounds$517 & $\pounds$2,526 \\
+        Haematology & $\pounds$411 & $\pounds$1,208 & $\pounds$5,214 \\
+        Infectious Diseases & $\pounds$438 &$\pounds$711 & $\pounds$1,188 \\
+        Intermediate Care & $\pounds$0 & $\pounds$118 & $\pounds$361 \\
+        Maxillo-Facial & $\pounds$96 & $\pounds$1,410 & $\pounds$8,637 \\
+        Neurology & $\pounds$620 & $\pounds$1,273 & $\pounds$3,260 \\
+        Ophthalmology & $\pounds$166 & $\pounds$729 & $\pounds$10,895 \\
+        Pain &$\pounds$6 & $\pounds$128 & $\pounds$865 \\
+        Plastic Surgery & $\pounds$179 & $\pounds$902 & $\pounds$1,399 \\
+        Radiology & $\pounds$34 & $\pounds$1,021 & $\pounds$2,370\\
+        Radiotherapy and Oncology & $\pounds$48 & $\pounds$1,089 & $\pounds$2,182 \\ 
+        Rehabilitation & $\pounds$58 & $\pounds$1,455 & $\pounds$30,305 \\
+        Respiratory & $\pounds$75 & $\pounds$448 & $\pounds$1,818 \\
+        Restorative Dentistry & $\pounds$1 & $\pounds$140 & $\pounds$178 \\
+        Rheumatology & $\pounds$155 & $\pounds$596 & $\pounds$1,256 \\
+        Trauma and Orthopaedic & $\pounds$4 & $\pounds$703 & $\pounds$1,633 \\
+        Urology & $\pounds$77 & $\pounds$379 & $\pounds$17,899 \\ \bottomrule
+    \end{tabular}
+    \caption{NHS Scotland Minimum, Weighted Average and Maximum Costs per Specialty \cite{PHS2021} - Table \ref{tab:PHSCostsPerSpecialty} revisited}
+    \label{tab:PHSCostsPerSpecialty2}
+\end{table}
 
 
 \section{Generalizability of results}
@@ -473,5 +593,6 @@ The specific nodes can have values increased or decreased as to what potential f
     \item 
 \end{itemize}
 
+\section{Summary}
 
 \end{document}
