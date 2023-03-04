@@ -402,7 +402,7 @@ Table \ref{tab:Results5} presents the results tool has optimised the bed and sta
 \section{Scenario Analysis}
 This section aims to utilise the methods of linking the prescriptive and prescriptive models and 
 
-
+\hl{benefits of scenario analysis etc.}
 This sections looks at analysing specific scenarios in ABUHB as identified through collaboration with partners within the healthboard. The healthboard has three main concerns regarding changes within the future to the healthboard and how this may impact bed and staffing requirements, if no changes are made.
 
 \hl{See if i can find data on how many beds are currently open in each ward - and see when demand is not met. - I have this in an Excel File somewhere}
@@ -449,9 +449,9 @@ The cost for each specialty bed was derived from Publish Health Scotland open so
 
 %To encourage patients to be admitted to the hospital within a region they reside, a preference matrix can be introduced. The hospital is penalised if patients attend a hospital not in the local region.
 
-As the regression tree nodes \hl{resulted} in similar results to the OpenSolver averages, this method will be used to generate the demands moving forward. By linking the predictive and prescriptive paradigms, the scenario analysis can utilise more specific scenarios by varying the demand through nodes individually. This is more realistic than the current practice of increasing and decreasing the demands by a fixed percentage. The data will be used over a the entire three years worth of data. Even though more savings can be made if planned on a smaller scale, i.e., yearly, it is impractical to for the healthboard to make such changes on a regular scale.
+%As the regression tree nodes \hl{resulted} in similar results to the OpenSolver averages, this method will be used to generate the demands moving forward. By linking the predictive and prescriptive paradigms, the scenario analysis can utilise more specific scenarios by varying the demand through nodes individually. This is more realistic than the current practice of increasing and decreasing the demands by a fixed percentage. The data will be used over a the entire three years worth of data. Even though more savings can be made if planned on a smaller scale, i.e., yearly, it is impractical to for the healthboard to make such changes on a regular scale.
 
-Firstly executing the model with the four scenarios as described previously results in a deterministic value of $\pounds$746,743.68 with 981 beds and 489 staff being deployed (Table \ref{tab:Scenario1Results}). This value increases to $\pounds$762,058.20 for the two stage stochastic model. These results show that by opening GUH and restructuring the specialties within hospitals produces savings of $\pounds$21,527.04. This shows the benefit to decision makers of opening this hospital, and the savings they can potentially make by using the two-stage stochastic model (2.82\%).
+Firstly executing the model with the four scenarios as described previously results in a deterministic value of $\pounds$748,129.68 with 981 beds and 489 staff being deployed (Table \ref{tab:Scenario1Results}). This value increases to $\pounds$763,721.94 for the two stage stochastic model. These results show that by opening GUH and restructuring the specialties within hospitals produces savings of $\pounds$21,255.60. This shows the benefit to decision makers of opening this hospital, and the savings they can potentially make by using the two-stage stochastic model (2.78\%).
 
 
 \begin{table}[h!]
@@ -460,9 +460,9 @@ Firstly executing the model with the four scenarios as described previously resu
  & \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){2-3} \cmidrule(lr){4-5}
          
  & xbed           & ubed          & xstaff         & ustaff         \\ \midrule
- Deterministic & 981 & - & 489 & - & $\pounds$746,743.68 = EV \\
- Stochastic & 939 & 152 & 465 & 78 & $\pounds$762,058.20 = RP \\
- Test A & 981 & 94 & 489 & 69 & $\pounds$783,585.24 = EEV \\\bottomrule
+ Deterministic & 978 & - & 489 & - & $\pounds$748,129.68 = EV \\
+ Stochastic & 944 & 161 & 465 & 78 & $\pounds$763,721.94 = RP \\
+ Test A & 981 & 94 & 489 & 69 & $\pounds$784,977.54 = EEV \\\bottomrule
     \end{tabular}
     \caption{Deterministic and Two-Stage Stochastic Results - Scenario 1}
     \label{tab:Scenario1Results}
@@ -479,13 +479,13 @@ Firstly executing the model with the four scenarios as described previously resu
 %\subsection{Adding in Grange}
 % The final scenario investigates the effect on current services if a new hospital is added into the region. Within ABUHB a specialist critical care centre known as The Grange University Hospital, was opened in 2022, (\hl{check}), with the aim to centralise existing services within the healthboard. Therefore
 
-\hl{think I can merge these two together?}
+%\hl{think I can merge these two together?}
 %\subsection{Flexibility in moving patients to different regions}
-\begin{itemize}
-    \item How would services work if there was an overlap, with a Preference matrix to allow movement between services - maybe? 
-\end{itemize}
+% \begin{itemize}
+%     \item How would services work if there was an overlap, with a Preference matrix to allow movement between services - maybe? 
+% \end{itemize}
 \subsection{M- Penalty}
-The models so far have only considered hard constraints. Hard constraints are where constraints must be satisfied by any feasible solution to produce an optimal solution. However, in reality, if there is not sufficient capacity, patients can not be admitted into hospitals and either treated at home, or transferred to a neighbouring healthboard for treatment. This would then result in an additional cost. This can be incorporated into the existing constraints by the addition of the decision variable $z$. In order to account for this within the objective function, a cost term of $M$ is added, where $M$ is a fixed cost regardless of hospital or specialty. If this was to made more specific to the specialty or hospital, the subscripts $_{s,h}$ could be added and a two-dimensional variable generated. This results in the following formulation for the objective value function and first constraint.
+The models so far have only considered hard constraints. Hard constraints are where constraints must be satisfied by any feasible solution to produce an optimal solution. However, in reality, if there is not sufficient capacity, patients can not be admitted into hospitals and either treated at home, or transferred to a neighbouring healthboard for treatment. This would then result in an additional cost. This can be incorporated into the existing constraints by the addition of the decision variable $z$, where $z \in \mathbb{N}$. In order to account for this within the objective function, a cost term of $M$ is added, where $M$ is a fixed cost regardless of hospital or specialty. If this was to made more specific to the specialty or hospital, the subscripts $_{s,h}$ could be added and a two-dimensional variable generated. This results in the following formulation for the objective value function and first constraint.
 
 \underline{Deterministic Model}
 \begin{equation}\label{eq:det_objective}
@@ -498,7 +498,7 @@ The models so far have only considered hard constraints. Hard constraints are wh
 
 \begin{multline}\label{eq:sto_objectiveupdate}
     \min \sum_{h\in\mathcal{H}}\sum_{s\in\mathcal{S}}(x^\textnormal{bed}_{s,h}c^\textnormal{bed, 1st}_{s,h} + \sum_{b\in\mathcal{B}}x^\textnormal{staff}_{s,b,h}c^\textnormal{staff, 1st}_{b}) +\\ 
-    \sum_{k\in\mathcal{K}}\sum_{h\in\mathcal{H}}\sum_{s\in\mathcal{S}}p_{k}(\sum_{r\in\mathcal{R}} P_{r,h} u^\textnormal{bed}_{s,h,k}c^\textnormal{bed, 2nd}_{s,h} +
+    \sum_{k\in\mathcal{K}}\sum_{h\in\mathcal{H}}\sum_{s\in\mathcal{S}}p_{k}(u^\textnormal{bed}_{s,h,k}c^\textnormal{bed, 2nd}_{s,h} +
    \sum_{b\in\mathcal{B}} u^\textnormal{staff}_{s,b,k,h}c^\textnormal{staff, 2nd}_{b}) + Mz
 \end{multline}
 
@@ -506,16 +506,62 @@ The models so far have only considered hard constraints. Hard constraints are wh
     \sum_{h\in\mathcal{H}} x^\textnormal{bed}_{s,h} +  \sum_{h\in\mathcal{H}} u^\textnormal{bed}_{s,h,k} \geq D_{s,k} \hspace{0.5cm} \forall s \in \mathcal{S}, k \in \mathcal{K}\\
 \end{equation}
 
-These new objective functions and constraints can be inputted into the OpenSolver model and solved with the regression tree nodes as demands. Since hard constraints have been used previously, the model will produce the same results as those in Section \ref{{sec:scenario1}} and the objective function values shown in Table \ref{tab:Scenario1Results}. However, if hospital beds are reallocated to other patient age groups within the hospital, or decision makers want to either close hospitals as happened in \hl{YEAR} \hl{REFERENCE}, or close specialties within certain hospitals \hl{Reference maybe?}, it will provide testing to determine how this will impact overall costs and resource requirement.
+These new objective functions and constraints can be inputted into the OpenSolver model and solved with the regression tree nodes as demands. Since hard constraints have been used previously, the model will produce the same results as those in Section \ref{{sec:scenario1}} and the objective function values shown in Table \ref{tab:Scenario1Results}. However, if hospital beds are reallocated to other patient age groups within the hospital, or decision makers want to either close hospitals as happened in \hl{YEAR} \hl{REFERENCE}, or close specialties within certain hospitals \hl{Reference maybe?}, it will provide testing to determine how this will impact overall costs and resource requirement. 
+
+If decision makers decided to reduce the number of available beds within  STW(A), to the elderly and frail patients, then this would cause the services of dermatology and T\&O to not be able to open within this hospital. Whilst T\&O services can be reallocated to either RGH, YYF, GUH or NHH, the dermatology specialty is not provided by any other hospital. Therefore if we make the assumption that none of the 
+
+If we set $M$ to be a value of $\pounds$2,500, this value is greater than any of the second stage hospital costs across the healthboard. It is the assumption the $M$ is not scenario dependant meaning that if in a scenario, a penalty occurs, it occurs for all scenarios. Table \ref{tab:Scenario2Results} presents the results of the deterministic and two-stage stochastic models. The deterministic result deployed 978 beds and 496 staff within the healthboard and produced and EV of $\pounds$751,459.32. This value contains an average daily cost of $\pounds$7,500, where three dermatology beds are required but the demand cannot be met. By closing this hospital to the elderly and frail, this causes a 0.45\% increase in daily costs, equivalent to $\pounds$3,329.64 when compared to Table \ref{tab:Scenario1Results}. By performing the two-stage stochastic model, 934 beds are deployed in the first stage with a maximum of 155 beds deployed in the second stage. This increases the objective value to $\pounds$766,524.90, an increase of 0.37\% without using the M- penalty method. The VSS can be calculated to be 2.84\% with an addition saving of $\pounds$21,782.90 per day by using the stochastic solution over the deterministic.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cccccl}\toprule
+ & \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+         
+ & xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+ Deterministic & 978  & - & 486 & - &$\pounds$751,459.32 = EV \\
+ Stochastic & 934 & 155 & 462 & 81 & $\pounds$766,524.90 = RP \\
+ Test A & 978 & 94 & 486 & 69 & $\pounds$788,307.18 = EEV \\\bottomrule
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Scenario 2}
+    \label{tab:Scenario2Results}
+\end{table}
+
+
+The greatest effects of the M-penalty will be seen within Section \ref{sec:scenario4}, where the demands will be increased significantly to replicate the effect of a pandemic similar to those of Covid-19 to determine the robustness of the healthcare system.
+
+\subsection{Re-evaluating the Current Setup}\label{sec:scenario3}
+This section aims to re-evaluate the current setup of specialties bed locations in the healthboard and determine if decision makers were to reorganise specialties, what is the most efficient way to do this. This works under the assumptions that a patient can be admitted into any hospital within the healthboard and all hospitals have the potential to locate any specialty. Since the opening of GUH in 2020, specialties since have been relocated around the healthboard. This work will determine if there have been sufficient beds planned and the required staff members to meet the current demand.
+
+The models will work under the assumption that patients can be admitted into any hospital within the area (Section \ref{}) and if demand is not met across the healthboard, then there is a penalty (Section \ref{}).
+
+Previously, specialty bed costs from Public Health Scotland have been utilised for the models (Table \ref{tab:PHSCostsPerSpecialty2}). %These variables will be extended to provide a cost for every specialty in every hospital.
+% Recall Table \ref{tab:PHSCostsPerSpecialty2} which contains the range of costs from Public Health Scotland for specialties within the healthboard.
+As this scenario allows all hospitals to have all specialties, the cost matrix for first and seconds beds requires modifying to incorporate this. The costings used previously, will be recalculated with the new value for each hospital and specialty falling between the given ranges, with the average equalling the average of the Scottish data. Table \ref{} \hl{REFERENCE} within the Appendix depicts these newly generated figures. As with the previous scenario, if a hospital already contained a specialty, the same cost was used.
+
+Table \ref{tab:Scenario3Results} displays the final figures one the model has been executed. Within this model, 981 beds are deployed with 492 nursing staff required. In the majority of cases specialities are localised to one or two hospital (Figure \ref{} \hl{APPENDIX FIGURE}). For the specialties of rehabilitation and T\&O, four and three hospital are used to deploy these specialties. There is no overlap between these two specialities, therefore if a hospital has a T\&O ward, they would not have a rehabilitation ward. This is changed in the two-stage stochastic model where \hl{Rhymney} deploys both specialities. The VSS is calculated to be 1.83\%, showing the benefit of utilising the stochastic model over the deterministic model.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cccccl}\toprule
+ & \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+         
+ & xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+ Deterministic & 981  & - & 492 & - &$\pounds$633,012.04 = EV \\
+ Stochastic & 937 & 154 & 470 & 87 & $\pounds$649,918.18 = RP \\
+ Test A & 981 & 98 & 492 & 69 & $\pounds$661,797.88 = EEV \\\bottomrule
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Scenario 3}
+    \label{tab:Scenario3Results}
+\end{table}
 
 
 
 
 
-\begin{itemize}
-    \item Soft constraints that if demand is not met, then do not need to open ward but there is an additional cost
-\end{itemize}
-\subsection{Long term predictions}
+% \begin{itemize}
+%     \item Soft constraints that if demand is not met, then do not need to open ward but there is an additional cost
+% \end{itemize}
+\subsection{Long term predictions}\label{sec:scenario4}
 Long term planning decisions are important within healthcare to determine how demand will vary or change within the future. There are four main reasons as to why long term planning is essential:
 \begin{enumerate}
     \item Anticipation of future needs: Long term planning helps healthcare organisations to anticipate future needs and plan accordingly. If an area is facing an ageing population, then healthcare providers can plan to expand specific services that are tailored to the needs to the elderly, e.g. COTE.
@@ -524,10 +570,79 @@ Long term planning decisions are important within healthcare to determine how de
     \item Resource allocation: Long term planning allows healthcare organisations to allocate resources effectively. With this planning, decision makers can make informed decisions about where to invest resources, such as building new healthcare facilities, hiring additional staff or purchasing new equipment.
 \end{enumerate}
 
-There are three main causes for why the demand will change in the future. Firstly, as Wales has an ageing population, 
+These reasons show the importance of the NHS being able to adapt to change. The demand and pressures on the NHS are expected to increase over the coming years due to rising populations \cite{WelshGovernment2022b}, Covid-19 recovery backlog \cite{AGW2022} and lifestyle factors causing more hospital admissions \cite{Luben2019}. 
+
+The next scenario will analyse what the effect would be if the number of available staff were to decrease. There are a number of causes for why this may occur such as; nurses leaving the profession after the Covid-19 pandemic \cite{Devereux2022}, nurses striking for fairy pay and working conditions \cite{RCN2023} or sickness \cite{WelshGovernment2022a}.
+
+If we make the assumption the number of nursing staff available reduces to 160 for each band in the first stage, and an additional 40 available within the second stage, the EV produces a value of $\pounds$750,464.76. Due to the limited availability of staff, it causes the $z$ decision variable to be equal to four, as wards cannot open as they do not meet the safe staffing levels. Most interestingly, the model does not meet the optimal value within the 100 second time limit and causes a non-optimal number of staff to be deployed. Within the EEV solution, the $z$ decision variable is equal to three, meaning in the stochastic environment, the model is able to reduce the penalty face by not meeting this demand. The VSS is calculated to be 2.65\% with daily savings of $\pounds$20,265.68. The location of where beds should be deployed in this scenario can be seen in Figures \ref{} \hl{Appendix}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cccccl}\toprule
+ & \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+         
+ & xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+ Deterministic & 977 & - & 478 & - &$\pounds$750,464.76 = EV \\
+ Stochastic & 938 & 147 & 462 & 78 & $\pounds$765,112.14 = RP \\
+ Test A & 977 & 95 & 478 & 69 & $\pounds$785,377.82 = EEV \\\bottomrule
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Scenario 4}
+    \label{tab:Scenario4Results}
+\end{table}
+
+
+
+There are three main causes for why the demand will change in the future. Firstly, as Wales has an ageing population, it is expected the number of people falling into the 65 and over category will increase. Therefore the amount of patients 
+
+This section will look at increasing the demands for demand for the individual nodes, 
+
+% Firstly, if we keep the demands the same, but reduce the number of staff available either due to sickness \cite{} or strike action \cite{} \hl{REFERENCE}. If we make the assumption there are 160 nursing staff available for each specialty in the first stage, and an additional 40 available within the second stage, produces an EV value of $\pounds$7,.. This causes a total sum for $z$ to be \hl{X}, as wards cannot open as they do not meet the safe staff levels
+5
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cccccl}\toprule
+ & \multicolumn{2}{l}{\textbf{Total Beds}} & \multicolumn{2}{c}{\textbf{Total Staff}} & \multirow{2}{*}{\textbf{Objective Value ($\pounds$)}}\\ \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+         
+ & xbed           & ubed          & xstaff         & ustaff         \\ \midrule
+ Deterministic &   & - &  & - &$\pounds$ = EV \\
+ Stochastic &  &  &  &  & $\pounds$ = RP \\
+ Test A &  &  &  &  & $\pounds$ = EEV \\\bottomrule
+    \end{tabular}
+    \caption{Deterministic and Two-Stage Stochastic Results - Scenario 4}
+    \label{tab:Scenario4Results}
+\end{table}
+
+
+% This model will look at three experiments where 
+
+% As this data
+
+As the regression tree nodes resulted in similar results to the OpenSolver averages,
+this method will be used to generate the demands moving forward. By linking
+the predictive and prescriptive paradigms, the scenario analysis can utilise more
+specific scenarios by varying the demand through nodes individually. This is more
+realistic than the current practice of increasing and decreasing the demands by a
+fixed percentage. The data will be used over the entire three years worth of data.
+Even though more savings can be made if planned on a smaller scale, i.e., yearly, it
+is impractical to for the healthboard to make such changes on a regular scale.
+
 
 \begin{itemize}
-    \item staff low levels
+    \item First regular increase - population predictions
+    \item Reducing demand with virtual wards
+    \item pandemic panic
+    
+\end{itemize}
+
+
+It is well-known within healthcare patients recover quicker when they are treated at home \cite{CHNFT2022}. This can be due to more support from family members and care-givers or less risk of infection. Virtual hospital wards are a recent innovation in healthcare that have emerged as a response to the Covid-19 pandemic. These wards allow patients to receive medical care and monitoring from the comfort of their own homes, reducing the burden on hospitals and minimising the risk of exposure to Covid-19. Virtual hospital wards use a range of digital technologies to provide patients with remote monitoring, consultations with healthcare professionals, and access to medical equipment and medications. This approach to healthcare delivery has the potential to revolutionise the way practitioners provide care to patients, particularly those with chronic conditions, and improve patient outcomes while reducing healthcare costs. Virtual wards can be used to discharges patients quicker out of hospital or to not admit these patients in the first place \cite{Trueland2023}.
+
+If ABUHB were to implement similar virtual wards as to other regions in the UK, this could provide numerous benefits. The Croydon Health Services NHS Trust has deployed virtual wards in two of their specialties, cardiology and respiratory \cite{HINSL2021}. The trust found cost savings of approximately $\pounds$1,080 per patient, and only 20\% of patients were required to be admitted to hospital. Applying this to the ABUHB, if the demand for cardiology and respiratory services were to decrease by \hl{X}\%.
+
+\hl{Tomorrow, if I take dataset on python and have an if specialty = then reduce count by X\%, this would have to be done in each node, but I will know which nodes will run them. Then I can use the same specific LOS}
+
+By reducing the number of admissions for the frail and elderly, it means services have be freed up for younger patient who typically do not contract other illnesses in hospital.
+\begin{itemize}
     \item extreme covid demand - pandemic prepardness
 \end{itemize}
 
@@ -537,13 +652,10 @@ There are three main causes for why the demand will change in the future. Firstl
     \item 
 \end{itemize}
 \hl{reference this: https://www.nhsconfed.org/articles/virtual-care-reducing-hospital-admissions}
-\subsection{Re-evaluating the Current Setup}
-This section aims to re-evaluate the current setup of specialties bed locations in the healthboard and determine if decision makers were to reorganise specialties, what is the most efficient way to do this. This works under the assumptions that a patient can be admitted into any hospital within the healthboard and all hospitals have the potential to locate any specialty. Since the opening of GUH in 2020, specialties since have been relocated around the healthboard. This work will determine if there have been sufficient beds planned and the required staff members to meet the current demand.
 
-The models will work under the assumption that patients can be admitted into any hospital within the area (Section \ref{}) and if demand is not met across the healthboard, then there is a penalty (Section \ref{}).
 
-Previously, specialty bed costs from Public Health Scotland have been utilised for the models (Table \ref{tab:PHSCostsPerSpecialty2}). These variables will be extended
-Recall Table \ref{tab:PHSCostsPerSpecialty2} which contains the range of costs from Public Health Scotland for specialties within the healthboard. As this scenario allows all hospitals to have all specialties, the cost matrix for first and seconds beds requires modifying to incorporate this. The costings used previously, will be recalculated with the new value for each hospital and specialty falling between the given ranges. The average for all specialties will be equal to the average given in Table \ref{tab:PHSCostsPerSpecialty2}.
+
+
 \begin{table}[h!]
     \centering
     \begin{tabular}{lccc}\toprule
