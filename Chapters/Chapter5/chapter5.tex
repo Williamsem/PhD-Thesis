@@ -3,23 +3,23 @@
 
 \chapter{Experimental Analysis of the Predictive and Prescriptive Models}\label{chp:Experimental Analysis}
 \section{Introduction}
-This chapter discusses the experimental results for the predictive and prescriptive theory discussed in Chapters \ref{chp:predictive} and \ref{chp:presciptive} respectively.
+The field of data science and OR has witnessed a significant evolution in recent years, with the development of predictive and prescriptive models emerging as an important aspect of the discipline. Predictive models aim to forecast future events or trends based on historical data, while prescriptive models focus on providing recommendations for actions to be taken based on the predictions made by predictive models. Both types of models have been widely adopted across various domains, including business, healthcare, and social media. This chapter discusses the experimental results for the predictive and prescriptive theory discussed in Chapters \ref{chp:predictive} and \ref{chp:presciptive} respectively.
 
 \begin{description}
 \item[\textcolor{red}{Research Aim}] - This chapter will utilise the methods discussed in the previous two chapters to apply to data from ABUHB to answer the following four research questions:
 \begin{enumerate}
     \item How do the clinical and demographical attributes of elderly and frail patients effect their length of stay within hospital? - Section \ref{sec:sec:predictiveresults}
     \item How best can specialities be organised among a network of hospitals to ensure staffing and bed costs are minimised? - Section \ref{sec:prescriptiveresults}
-    \item How can deterministic and two-stage stochastic models be used to successfully plan hospital services? - Section \ref{}%Be more specific - what model
-    \item How can linking predictive and prescriptive analytics increase the reliability of the models? - Section \ref{sec:linking}
+    \item How can deterministic and two-stage stochastic models be used to successfully plan hospital services? - Section \ref{sec:prescriptiveresults}%Be more specific - what model
+   %\item How can linking predictive and prescriptive analytics increase the reliability of the models? - Section \ref{sec:linking}
 \end{enumerate}
 \end{description}
 
-The remainder of the Chapter is structured as follows: Section \ref{sec:dataintroduction} introduces three years worth of data from ABUHB used within this research, highlighting key insights. Section \ref{sec:predictiveresults} applies predictive analytics to the ABUHB data.
-\hl{Introduce the research aim of the chapter - and what each subsection will do}
+The remainder of the Chapter is structured as follows: Section \ref{sec:dataintroduction} introduces three years' worth of data from ABUHB used within this research, highlighting key insights. Section \ref{sec:predictiveresults} applies predictive analytics to the ABUHB data, discussing linear and logistic regression and CART models. Section \ref{sec:prescriptiveresults} will develop the deterministic and two-stage stochastic models within Microsoft Excel OpenSolver and Python PuLP.
+%\hl{Introduce the research aim of the chapter - and what each subsection will do}
 
 \section{Data Introduction} \label{sec:dataintroduction}
-This section provides an overview of the data received from ABUHB, to gain a deeper understanding into the current practice and trends within ABUHB. Three years worth of data was analysed ranging from April 2017 to March 2020, with two data sets being amalgamated to show an insight into the overall pathway. The first data set is from Myrddin \cite{WAO2018}, the patient administration system (PAS). Myrddin stores all patient contact details, outpatient appointments, generates letters for patients, and specifically for this research, inpatient information. The second data set is the Welsh Radiological Information System (RadIS), \cite{WAO2018}. The RadIS IT system records and keeps track of which patients have received scans as well as the data that is gathered in conjunction with this.
+This section provides an overview of the data received from ABUHB, to gain a deeper understanding into the current practice and trends within ABUHB. Three years' worth of data was analysed ranging from April 2017 to March 2020, with two data sets being amalgamated to show an insight into the overall pathway. The first data set is from Myrddin \cite{WAO2018}, the patient administration system (PAS). Myrddin stores all patient contact details, outpatient appointments, generates letters for patients, and specifically for this research, inpatient information. The second data set is the Welsh Radiological Information System (RadIS), \cite{WAO2018}. The RadIS IT system records and keeps track of which patients have received scans as well as the data that is gathered in conjunction with this.
 
 Prior to any data analysis occurring, data cleansing was performed to ensure that all incorrect and incomplete entries were removed. Additionally, to make sure the patients were pertinent to the study, additional criteria were established. The following criteria were set:
 \begin{enumerate}
@@ -90,7 +90,7 @@ In total, 165,118 patients, having met the admission criteria, were included wit
 \end{figure}
 
 \subsection{Data Trends}\label{sec:datatrends}
-Three years worth of data was analysed to gain an understanding as to the demands faced by the elderly population within ABUHB. Figure \ref{fig:AdmissionCount} displays the daily count of admissions into ABUHB over this time period. The fluctuations within the data suggest seasonality is present as is often found within healthcare data \cite{Upshur2005}. Analysis on a year to year basis (running April to March), showed the number of patients remained fairly consistent over the three years:
+Three years' worth of data was analysed to gain an understanding as to the demands faced by the elderly population within ABUHB. Figure \ref{fig:AdmissionCount} displays the daily count of admissions into ABUHB over this time period. The fluctuations within the data suggest seasonality is present as is often found within healthcare data \cite{Upshur2005}. Analysis on a year to year basis (running April to March), showed the number of patients remained fairly consistent over the three years:
 \begin{itemize}
     \item 2017-2018: 53,256 (32.25\%)
     \item 2018-2019: 56,050 (33.95\%)
@@ -120,7 +120,7 @@ Within the data there were 66,289 unique NHS numbers, meaning 98,829 stays were 
 
 The patient who underwent seven transfers and readmissions, spent a total 219 days in hospital, primarily moving between Royal Gwent Hospital (RGH) and County Hospital before being discharged to a non-NHS care home. This is also known as step-up and step-down care.
 
-The age of patients had a lower bound of 65, with the oldest age of 107 years old. The mean age was calculated to be 77 years with a standard deviation of eight years. Due to the 42 year age range, patients were also grouped into five-year age categories to determine if this would be a more accurate predictor (Figure \ref{fig:AgeGroup}). 
+The age of patients had a lower bound of 65, with the oldest being 107 years old. The mean age was calculated to be 77 years with a standard deviation of eight years. Due to the 42 year age range, patients were also grouped into five-year age categories to determine if this would be a more accurate predictor (Figure \ref{fig:AgeGroup}). 
 
 \begin{figure}[h!]
     \centering
@@ -157,7 +157,7 @@ Non NHS (other than L.A.) run nursing home&	1314 &0.80\%\\
 \end{table}
 
 
-The admission method followed a similar trend to the admission source, with a small number of methods accounting for the majority of patients. Although there were 16 distinct methods, 99.23\% of patients were accounted for through the top seven (Table \ref{tab:AdmissionMethod}). `Elective - waiting list' was the most common admission method and is one that has been arranged in advance of admission. The patient has been admitted via a waiting list, where at the point of being put on to the waiting list, did not know their date of admission. The period in which the patient has to wait is dependant on the demand for hospital resources and facilities.
+The admission method followed a similar trend to the admission source, with a small number of methods accounting for the majority of patients. Although there were 16 distinct methods, 99.23\% of patients were accounted for through the top seven (Table \ref{tab:AdmissionMethod}). `Elective - waiting list' was the most common admission method and is one that had been arranged in advance of admission. The patient had been admitted via a waiting list, where at the point of being put onto the waiting list, did not know their date of admission. The period in which the patient had to wait was dependant on the demand for hospital resources and facilities.
 
 \begin{table}[h!]
     \centering
@@ -176,11 +176,9 @@ Emergency - other means&1658 & 1.04\%\\
     \label{tab:AdmissionMethod}
 \end{table}
 
-The LOS of the patient was determined by the time between admission and hospital discharge. There was a large range of LOS's, from 0 to 413 days. The LOS can be modelled in two ways, in hours or in days. The first method of calculating LOS, used the number of hours that patients had been admitted for. It was determined using the admission and discharge dates as well as specific times. The average LOS was calculated to be 155.23 hours (6.47 days). The second method of calculating LOS, meant that if a patient was admitted overnight, an additional day was added to their LOS i.e., if admitted Monday evening and discharged Tuesday morning, their LOS was \hl{CHECK THIS} 2.
-\hl{Read up to here}
-Further analysing LOS in hours, the mean was 6.47 days, whilst the 75$^{th}$ percentile was 7 days. The 90$^{th}$ percentile was 18 days increasing to 30 with the 95$^{th}$ percentile. This suggests there are some long LOS's that are skewing the mean. 81,538 (49.38\%) of patients were discharged within 24 hours, and 114,015 (69.05\%) patients were discharged within 5 days. 5\% of patients had a LOS greater than 30 days.
+The LOS of the patient was determined by the time between admission and hospital discharge. There was a large range of LOS's, from 0 to 413 days. The LOS can be modelled in two ways, in hours or in days. The first method of calculating LOS, used the number of hours that patients had been admitted for. It was determined using the admission and discharge dates as well as specific times. The average LOS was calculated to be 155.23 hours (6.47 days). The second method of calculating LOS, meant that if a patient was admitted overnight, an additional day was added to their LOS i.e., if admitted Monday evening and discharged Tuesday morning, their LOS was one. Additional analysis of LOS in hours revealed the mean to be 6.47 days and a 75$^{th}$ percentile of seven days. The 90$^{th}$ percentile was 18 days increasing to 30 days with the 95$^{th}$ percentile. This implies that some long LOS's that are skewing the mean. Patients were released from the hospital in 81,538 (49.38\%) cases within 24 hours and 114,015 (69.05\%) cases within five days. A LOS longer than 30 days was present in 5\% of patients.
 
-Depending on the day admitted, the LOS of a patient varied (Table \ref{tab:DayLOS}). Again, patients who were admitted on a weekend have a different variation to those patients admitted during the week. The average LOS was at least an extra day longer if admitted on a weekend.
+A patient's LOS changed depending on the day they were admitted (Table \ref{tab:DayLOS}). Again, patients who were admitted on a weekend have a different variation to those patients admitted during the week. If hospitalised on a weekend, the average LOS was at least an additional day longer.
 
 \begin{table}[h!]
     \centering
@@ -198,10 +196,9 @@ Depending on the day admitted, the LOS of a patient varied (Table \ref{tab:DayLO
     \label{tab:DayLOS}
 \end{table}
 
-The frailty score was calculated using two methods both using the ICD10 codes, as discussed in Section \ref{sec:elderlyfrail}. In total there were 2,758 different codes relating to the diagnosis and reason for admission of the patient. The average frailty score was 0.5, with a standard deviation of 0.98. The maximum score was 8.1, with the lowest score being zero.
+As discussed in Section \ref{sec:elderlyfrail}, two approaches, each employing ICD10 codes, were used to determine the frailty score. Regarding the patient's diagnosis and the cause for admission, there were 2,758 unique codes in total. The average frailty score was 0.5, with a standard deviation of 0.98. The maximum score was 8.1, with the lowest score being zero.
 
-
-Patients admitted into hospital can be given multiple scans, depending on their condition and treatment. It was calculated there were 12,350 unique patient stays of which 9,863 patients had one scan only (Table \ref{Tab:Scan}). There were 2,487 patients who had at least two scans, of which 1,957 patients who only had two scans. One patient had a total of eight scans. 
+Depending on their health and course of treatment, patients who are admitted to the hospital may undergo a number of scans. In total, 12,350 patient scans were recorded, of which 9,863 patients had just one scan (Table \ref{Tab:Scan}). There were 2,487 patients who had at least two scans, of which 1,957 patients who only had two scans. One patient had a total of eight scans. 
 
 \begin{table}[h!]
     \centering
@@ -213,35 +210,15 @@ Patients admitted into hospital can be given multiple scans, depending on their 
     \label{Tab:Scan}
 \end{table}
 
-
-
-
-% \begin{itemize}
-%     \item Age
-%     \item Hospital
-%     \item Admission Times/day
-%     \item Locality of arrivals
-%     \item Scan data
-%     \item no scan patients against scan patients 
-%     \item LOS
-%     \item frailty
-% \end{itemize}
-
 \subsection{Data Insights}
-The information from the combined data sets provides 165,118 patient records over a three year period with admissions remaining constant throughout this time. There are a higher concentration of arrivals from populous towns and cities in South East Wales, such as Caerphilly and Newport, with fewer arrivals from remote areas within the region. The higher attended hospitals tended to be the acute hospitals with 24/7 services in the region, similarly located in Caerphilly and Newport. Admissions tend to be higher during the week, with peak admissions arriving on a Tuesday. For all arrivals, there tended to be peaks in the late morning, early afternoon, and a smaller peak in the evening. The patient demographics are varied amongst all hospitals, however the LOS varied by age and hospital attended. The trends show that shorter LOS are more common at acute hospitals with longer LOS's at more community based hospitals. The age of the patients are fairly mixed, however the majority are aged between 65 and 85. The frailty scores of the patients provide some indication on the severity of the illness. For certain hospitals, a higher frailty score is correlated with longer lengths of stays and older age of patients. There were a small subset of admitted patients who require at least one scan within hospital.
+The information from the merged data sets was comprised of 165,118 patient records over a three year period, with admissions remaining constant throughout this time. There were more arrivals from South East Wales' more populated towns and cities, like Caerphilly and Newport, than from the region's more rural parts. The acute hospitals with 24/7 services in the area, which are similarly situated in Caerphilly and Newport, tended to have greater patient attendance rates. Peak admissions occurred on a Tuesday, with admissions generally being greater during the week. For all arrivals, there were typically peaks in the late morning, early afternoon, and a smaller peak in the evening. The patient demographics were varied amongst all hospitals, however the LOS varied by age and hospital attended. The trends indicated that shorter LOS were more typical in acute hospitals while longer LOS were more prevalent in community-based hospitals. The patients' ages range widely, although the majority are between 65 and 85. The frailty scores of the patients provide some indication on the severity of the illness. Higher frailty scores were correlated with longer hospital stays and older patient populations in some hospitals. Among the admitted patients, there was a tiny subset who required at least one scan.
 
 
-
-
-% \begin{itemize}
-%     \item Keep it brief
-%     \item Two data types
-%     \item Key results
-% \end{itemize}
 \section{Predictive Analytics Results}\label{sec:predictiveresults}
-This section will look at applying the theory of predictive analytics discussed in Chapter \ref{chp:predictive} to the patient data from ABUHB to determine how clinical and demographic attributed effect hospital LOS.
+This section will examine how the patient data from ABUHB can be used to apply the notion of predictive analytics covered in Chapter \ref{chp:predictive} in order to ascertain how clinical and demographic factors affect hospital LOS.
+
 \subsection{Linear Regression}\label{sec:linregresults}
-Linear regression was performed on the fourteen variables to determine the highest influence on LOS. The LOS was converted into how many nights the patient spent in hospital, for example, if admitted on 01/01/2020 and discharged on 03/01/2020, the LOS would be three. This produced a higher R$^{2}$ value for linear regression for all cases than using the continuous hourly LOS. Table\ref{Tab:ContinuousLOS-Lin}, displays both the R$^{2}$ and adjusted R$^{2}$ values for each variable against this LOS.
+Linear regression was performed on the fourteen variables to determine the highest influence on LOS. The LOS was converted into how many nights the patient spent in hospital, for example, if admitted on 1$^{st}$ January 2020 and discharged on the 3$^{rd}$ January 2020, the LOS would be two. This produced a higher R$^{2}$ value for linear regression for all cases than using the continuous hourly LOS. The R$^{2}$ and adjusted R$^{2}$ values for each variable against this LOS are shown in  Table \ref{Tab:ContinuousLOS-Lin}.
 
 
 
@@ -275,10 +252,10 @@ The variables can be considered as two different data types, continuous and cate
     Y = 0.375x - 22.635
 \end{equation}
 where $x$ is the age of the patient.
-Therefore, for each 1 year increment in age, the LOS will increase by 0.375 days.
+Therefore, for each one year increment in age, the LOS will increase by 0.375 days.
 
-Similarly, we can calculate the linear regression model for categorical variables within Table \ref{Tab:ContinuousLOS-Lin}. The month of admission, produced an R$^{2}$ value of zero, meaning that month explains none of the variability of the response data around its mean. Specialty provided the largest R$^{2}$ value of 0.288. Within the specialty category, there are 29 subcategories of different specialities. In order to be able to predict LOS, we can further analyse each variable. Table \ref{tab:linreg-specialty} denotes the associated linear regression values for specialty. When one $x$ variable is selected, the corresponding value is the LOS. For example, if the specialty of A\&E is chosen, the LOS will be 2.2673 days. This can be directly compared to other specialties, for example Anaesthetics has a LOS of 6.5 times longer than A\&E. The value column displays the variation in the average LOS between each of the specialties.
-
+Similarly, we can calculate the linear regression model for categorical variables within Table \ref{Tab:ContinuousLOS-Lin}. The month of admission, produced an R$^{2}$ value of zero, which indicates that month does not account for any variation in the response data around its mean. Specialty provided the largest R$^{2}$ value of 0.288. There are 29 subcategories of different specialties within the speciality category. We can further analyse each variable to be able to forecast LOS. The corresponding linear regression values for speciality are shown in Table \ref{tab:linreg-specialty}. When one $x$ variable is selected, the corresponding value is the LOS. For instance, if the specialty of A\&E is chosen, the LOS will be 2.2673 days. This can be directly compared to other disciplines; for instance, the LOS in anaesthetics is 6.5 times greater than that in A\&E. The value column displays the variation in the average LOS between each of the specialties.
+\hl{Edited up to here}
 % where $x_{1}$ = Accident \& Emergency, $x_{2}$ = Anaesthetics, $x_{3}$ = Cardiology, $x_{4}$ = Care of the Elderly, $x_{5}$ = Community Medicine, $x_{6}$ = Dermatology, $x_{7}$ = Diabetes \& Endocrinology, $x_{8}$ = Ear, Nose \& Throat, $x_{9}$ = GP Other, $x_{10}$ = Gastroenterology, $x_{11}$ = General Medicine, $x_{12}$ = General Surgery, $x_{13}$ = Gynaecology, $x_{14}$ = Haematology, $x_{15}$ = Infectious Diseases, $x_{16}$ = Intermediate Care, $x_{17}$ = Maxillo-Facial, $x_{18}$ = Neurology, $x_{19}$ = Opthalmology, $x_{20}$ = Pain, $x_{21}$ = Plastic Surgery, $x_{22}$ = Radiology, $x_{23}$ = Radiotherapy \& Oncology, $x_{24}$ = Rehabilitation, $x_{25}$ = Respiratory, $x_{26}$ = Restorative Dentistry, $x_{27}$ = Rheumatology, $x_{28}$ = Trauma \& Orthopaedic ,$x_{29}$ = Urology.\\
 % \begin{align}
 %     Y =& 2.2673x_1 + 14.9517x_2 +4.647x_3 +12.1101x_4 + 34.235x_5 +0.2616x_6 +\nonumber \\  &11.6161x_7+
@@ -1855,9 +1832,9 @@ Test A calculates the VSS to determine the benefit of using the stochastic solut
 
 The VSS ranges from between 1.95\% to 2.73\%, showing that the total cost is increasing by up to 2.73\% by implementing the deterministic solution.
 \begin{align}
-    \text{VSS}_{17-18} &= \text{EEV}_{17-18} - \text{RP}_{17-18} = \pounds21,03 6.60 (2.03\%)  \\
-    \text{VSS}_{18-19} &= \text{EEV}_{18-19} - \text{RP}_{18-19} = \pounds21,279.32 (2.07\%)  \\
-    \text{VSS}_{19-20} &= \text{EEV}_{19-20} - \text{RP}_{19-20} = \pounds29,889.66 (2.91\%)  
+    \text{VSS}_{17-18} &= \text{EEV}_{17-18} - \text{RP}_{17-18} = \pounds21,03 6.60 \ (2.03\%)  \\
+    \text{VSS}_{18-19} &= \text{EEV}_{18-19} - \text{RP}_{18-19} = \pounds21,279.32  \ (2.07\%)  \\
+    \text{VSS}_{19-20} &= \text{EEV}_{19-20} - \text{RP}_{19-20} = \pounds29,889.66 \ (2.91\%)  
 \end{align}
 
 There are a number of reasons why the deterministic solution is considered poor. The model may be too optimistic on the randomness leading to insufficient beds and staff being deployed or the model could be planning the wrong beds and staff. This can be determined by calculating the LUSS and LUDS values.
@@ -2204,9 +2181,9 @@ The VSS is calculated to show the benefit of using the stochastic solution compa
 The VSS ranges from 2.27\% to 3.54\% which shows the value of using the stochastic solution to plan beds and staff for the elderly population.
 
 \begin{align}
-    \text{VSS}_{17-18} &= \text{EEV}_{17-18} - \text{RP}_{17-18} = \pounds23,426.04 (2.27\%)  \\
-    \text{VSS}_{18-19} &= \text{EEV}_{18-19} - \text{RP}_{18-19} = \pounds28,628.40 (2.8\%)  \\
-    \text{VSS}_{19-20} &= \text{EEV}_{19-20} - \text{RP}_{19-20} = \pounds36,169.34 (3.54\%)  
+    \text{VSS}_{17-18} &= \text{EEV}_{17-18} - \text{RP}_{17-18} = \pounds23,426.04 \ (2.27\%)  \\
+    \text{VSS}_{18-19} &= \text{EEV}_{18-19} - \text{RP}_{18-19} = \pounds28,628.40 \ (2.8\%)  \\
+    \text{VSS}_{19-20} &= \text{EEV}_{19-20} - \text{RP}_{19-20} = \pounds36,169.34 \ (3.54\%)  
 \end{align}
 
 To ascertain why the deterministic solution plans a smaller number of beds, the LUSS and LUDS values can be calculated. This determines whether since the model does not have any randomness, under estimates the exact number of beds required or whether the wrong locations of beds are planned. 
@@ -2317,17 +2294,11 @@ This section has discussed the research aim, `How best can specialties be organi
 
 
 \section{Summary}
-This section has presented the findings of the predictive and prescriptive analytical models. Section \ref{sec:dataintroduction} provided an overview of the current data and trends within ABUHB and within the elderly and frail community. 
-\hl{add more here}
+This section has presented the findings of the predictive and prescriptive analytical models. Section \ref{sec:dataintroduction} provided an overview of the current data and trends within ABUHB and within the elderly and frail community. Section \ref{sec:predictiveresults} has considered the improved results by using CART models over traditional linear and logistic regression methods. These CART models have also enabled patient groupings of similar attributes to be generated, as shown in Appendices \ref{app:secregression} and \ref{app:secclassification}. Section \ref{sec:prescriptiveresults} has applied the deterministic and two-stage stochastic models generated in Chapter \ref{chp:presciptive} to ABUHB data determining how beds should be organised and staff deployed based on figures from Public Health Scotland.
 
+Predictive and prescriptive models are increasingly being used in healthcare to improve patient outcomes and optimise resource utilisation. Predictive models can be used to identify patients who are at high risk of longer LOS and put in place appropriate intervention to reduce this. Prescriptive models can be used to determine capacity planning and staff requirements in order reduce the likelihood of not having sufficient capacity. By applying predictive and prescriptive models, healthcare organisations can improve patient outcomes while also maximising the value of healthcare resources.
 
-Talk about research aims here and how they have been met.
-
-Section \ref{sec:predictiveresults} 
-
-
-
-In addition, linking these two paradigms has taken place, validating the use of combining these methods. This has therefore enabled scenario analysis to take place using classification trees in investigating the effects of individual nodes changing demands rather than the long term 
-
-This chapter has served to provide the analytical results to answer the four research questions set out in Chapter \ref{chp:Introduction}. The following Chapter will provide an overview and user guide to the Microsoft Excel OpenSolver Tool and the Python PuLP model.
+This chapter has served to provide the analytical results to answer the first three research questions set out in Chapter \ref{chp:Introduction}. The following chapter will discuss the final research aim and link the predictive and prescriptive methods together.
+%In addition, linking these two paradigms has taken place, validating the use of combining these methods. This has therefore enabled scenario analysis to take place using classification trees in investigating the effects of individual nodes changing demands rather than the long term 
+%The following Chapter will provide an overview and user guide to the Microsoft Excel OpenSolver Tool and the Python PuLP model.
 \end{document}

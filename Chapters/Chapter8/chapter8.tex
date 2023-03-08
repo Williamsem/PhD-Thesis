@@ -2,6 +2,48 @@
 
 \begin{document}
 
-\chapter{Discussion and Conclusion}\label{chp:Discussion}
-Make link to initial research questions
+\chapter{Conclusions}\label{chp:Discussion}
+%Make link to initial research questions
+\onehalfspacing
+The chapter serves as a summary of the work done in the thesis. It provides a brief overview of the research questions listed in Section \ref{} and the methods used to answer them. The chapter also  presents contributions of the thesis and recommendations for future work.
+
+
+\section{Research Summary}
+Chapter \ref{} provided an introduction to the elderly and frail population within Wales. The chapter discussed the demographic changes that are occurring within the population, and the impact that these changes will have on the healthcare system. The types of hospitals and specialties which the healthboard currently has were also discussed. Current bed and staff planning methods were analysed with the following four research questions being introduced:
+
+
+\begin{enumerate}
+     \item How do the clinical and demographical attributes of elderly and frail patients effect their length of stay within hospital?
+     \item How best can specialities be organised among a network of hospitals to ensure staffing and bed costs are minimised? %organised change word
+     \item How can deterministic and two-stage stochastic models be used to successfully plan hospital services?
+     \item How can linking predictive and prescriptive analytics increase the reliability of the models?
+\end{enumerate}
+
+Chapter \ref{} provided a literature review of the practice of OR/MS approaches in the planning of care for the frail and elderly. The underutilisation of OR/MS techniques, the absence of comprehensive holistic care planning, and the implications of increases in demand on healthcare systems have all been noted as gaps in the literature. Within this thesis, these gaps were addressed.
+
+Chapter \ref{} addressed the theory underlying the most popular predictive analytical techniques presently used in healthcare. The results demonstrated the benefit of utilising more complex models, such as CART, instead of simpler models, such as linear regression to predict LOS of elderly and frail patients. These results yielded a more accurate prediction of LOS, which is important for planning purposes. A step-by-step practical example was also included so that healthcare professionals could quickly apply these strategies to their own departments and data. To enable model adaptation and parameter optimisation, detailed executable Python code was provided.
+
+Chapter \ref{} provided an introduction into two prescriptive methodologies, deterministic and two-stage stochastic modelling. Expanding on the two-stage stochastic programming paradigm and building on the tests introduced by Maggioni and Wallace \cite{Maggioni2010}, this chapter went further by creating two-dimensional decision variables which are dependent on each other along with the application to a different field of research, namely elderly and frail patient planning. The equations generated allow for the optimisation of the number of beds and staff required to meet the demand. The models created were robust and demonstrated the procedure. The tests discussed in \cite{Maggioni2010}, have also been employed, applied and evaluated to each of the examples. 
+
+
+Chapter \ref{} presented the findings of the predictive and prescriptive analytical models. Section \ref{sec:dataintroduction} provided an overview of the current data and trends within ABUHB and within the elderly and frail community. Section \ref{sec:predictiveresults} aimed to answer the first research question by generating CART models to predict LOS of elderly and frail patients. The models also compared the impact of frailty on LOS. The results highlighted the improved R$^{2}$ and accuracy scores when using CART models over traditional linear and logistic regression methods. These CART models also enabled patient groupings of similar attributes to be determined. Section \ref{sec:prescriptiveresults} aimed to answer the second research question by applying the deterministic and two-stage stochastic models generated in Chapter \ref{chp:presciptive} to ABUHB data. The models determined how beds should be planned and staff deployed based on figures from Public Health Scotland and NHS Wales (Check this), to ensure costings are minimised. Results showed around 2\% of savings could be made by ABUHB if they chose to use two-stage stochastic models to plan their beds and staff over traditional deterministic models. Any savings made by the NHS can be reinvested into other important areas of healthcare.
+
+Chapter \ref{} discussed how predictive and prescriptive analytics could be used in combination for efficiently planning hospital specialty beds and staffing requirements for a network of hospitals in South East Wales. Research question four was answered by comparing the regression tree and classification results to the traditional averages. A number of experiments were performed to determine how each of the CART models would perform if applied to prescriptive methods. The results showed similar number of bed and staff deployment, and determines the overall daily cost to the healthboard. Research question three was answered by performing scenario analysis to determine the robustness of the models and the ABUHB healthcare system. The addition of GUH, adding a soft constraint penalty and determining future scenarios were three main avenues explored. These models are also generalizable, meaning they may be applied to any age demographic or hospital locale, and can thus be used not only in other aspects of ABUHB and Wales, but also in global healthcare organisations.
+
+Finally, Chapter \ref{} provides a tutorial on how to use the deterministic and two-stage stochastic models generated. The models were implemented in both Microsoft Excel and Python. The models were implemented in Microsoft Excel using the OpenSolver add-in, and in Python using the PuLP package. Both versions of the models were implemented to reach a wider audience and subsequently uploaded to GitHub for future use. These models are available from \cite{}. These tutorials aim to provide a step-by-step guide on how to use the models and be applied to other healthcare organisations. As future patient demographics change, the models can be rerun with updated data to determine the best way to plan beds and staff.
+
+\section{Research Contributions}
+This findings presented within this thesis has provided a number of novel contributions to the literature of OR and healthcare applications. These contributions are as follows:
+\begin{itemize}
+    \item The literature reviews presented in Chapter \ref{} provided a comprehensive overview of the current literature on elderly and frail care planning with OR/MS methods and hierarchical prediction models to predict LOS. This enabled common themes and methods to be identified and enabling gaps within the literature to be determined. The reviews focused specifically on elderly and frail patients, showing the limited research published within this area.
+    \item The development of the predictive models (Chapter \ref{}) provides a step-by-step guide on how to develop CART models to predict LOS of elderly and frail patients clusters. 
+    \item The development of the prescriptive models (Chapter \ref{}) provides a step-by-step guide on how to develop deterministic and two-stage stochastic models to plan beds and staff for elderly and frail patients. This work further developed the research by Maggioni and Wallace, by applying to a new area of OR, applying to bed and staff resource requirements and generating two-dimensional arrays in which the data is stored.
+    \item By linking predictive and prescriptive analytics, decision makers can get a more comprehensive view of their data and use it to make better decisions. Chapter \ref{} demonstrated how these methods could be linked, providing a number of examples of different methods. This allowed for scenario analysis to be performed, using the combination of techniques to provide unique insights into the ABUHB healthcare system.
+\end{itemize}
+\hl{talk maybe about filling the gaps within the literature?}
+
+\section{Future Work}
+The deterministic and two-stage stochastic models presented within this thesis can be extended further than discussed in the Scenario Analysis of Chapter \ref{}.
+
+
 \end{document}
